@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import Appointments from './pages/Appointments';
@@ -12,15 +12,14 @@ import Customers from './pages/Customers';
 import MessageCustomizer from './pages/MessageCustomizer';
 import Login from './pages/Login';
 import ProtectedRoute from './components/ProtectedRoute';
-import LoginRedirect from './components/LoginRedirect';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
         <Routes>
-          <Route path="/login" element={<LoginRedirect />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/" element={
             <ProtectedRoute>
               <Layout>
@@ -84,6 +83,8 @@ function App() {
               </Layout>
             </ProtectedRoute>
           } />
+          {/* Catch-all route for any non-existent paths */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Router>
     </AuthProvider>
