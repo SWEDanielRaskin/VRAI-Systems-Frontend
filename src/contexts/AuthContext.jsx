@@ -19,6 +19,25 @@ export const AuthProvider = ({ children }) => {
   // Check if user is authenticated on app load
   useEffect(() => {
     const checkAuth = async () => {
+      // First, check for token in URL parameters (from central login)
+      const urlParams = new URLSearchParams(window.location.search);
+      const tokenFromUrl = urlParams.get('token');
+      const usernameFromUrl = urlParams.get('username');
+      
+      if (tokenFromUrl && usernameFromUrl) {
+        // Store token from URL and clean up the URL
+        localStorage.setItem('authToken', tokenFromUrl);
+        localStorage.setItem('username', usernameFromUrl);
+        setUser({ username: usernameFromUrl });
+        
+        // Clean up URL parameters
+        const newUrl = window.location.pathname;
+        window.history.replaceState({}, document.title, newUrl);
+        setLoading(false);
+        return;
+      }
+      
+      // Otherwise, check existing token in localStorage
       const token = localStorage.getItem('authToken');
       if (token) {
         try {
