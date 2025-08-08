@@ -12,14 +12,15 @@ import Customers from './pages/Customers';
 import MessageCustomizer from './pages/MessageCustomizer';
 import Login from './pages/Login';
 import ProtectedRoute from './components/ProtectedRoute';
-import { AuthProvider } from './contexts/AuthContext';
+import LoginRedirect from './components/LoginRedirect';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<LoginRedirect />} />
           <Route path="/" element={
             <ProtectedRoute>
               <Layout>
