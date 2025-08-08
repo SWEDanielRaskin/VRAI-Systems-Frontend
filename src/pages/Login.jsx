@@ -27,7 +27,7 @@ const Login = () => {
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
           <img
-            className="h-12 w-auto"
+            className="h-24 w-auto"
             src="/vrai-logo-black.png"
             alt="VRAI Systems"
           />
