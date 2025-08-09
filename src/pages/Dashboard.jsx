@@ -9,8 +9,10 @@ import {
   Settings,
   Sparkles,
   Users,
+  LogOut,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import AppleToggle from '../components/AppleToggle';
 import NotificationPreview from '../components/NotificationPreview';
 import {
@@ -29,6 +31,7 @@ import { BUSINESS_NAME, DASHBOARD_CONFIG } from '../config';
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
   const [systemHealth, setSystemHealth] = useState(null);
   const [loading, setLoading] = useState(true);
   const [overrideMode, setOverrideMode] = useState('actual');
@@ -189,6 +192,11 @@ const Dashboard = () => {
     await fetchAllData();
   };
 
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
   // UPDATED: Real notification handlers that call backend APIs
   const handleResolveNotification = async (notificationId) => {
     try {
@@ -319,6 +327,10 @@ const Dashboard = () => {
 
         {/* Controls */}
         <div className="flex items-center space-x-4">
+          {/* Welcome message */}
+          <span className="text-sm text-gray-600">
+            Welcome, {user?.username}
+          </span>
           <button
             onClick={() => navigate('/settings')}
             className="btn-secondary flex items-center space-x-2"
@@ -333,6 +345,13 @@ const Dashboard = () => {
           >
             <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
             <span>Refresh</span>
+          </button>
+          <button
+            onClick={handleLogout}
+            className="btn-secondary flex items-center space-x-2 text-gray-600 hover:text-gray-900"
+          >
+            <LogOut className="h-4 w-4" />
+            <span>Logout</span>
           </button>
           {/* FIXED: Enhanced auto-refresh indicator with 3-minute timing */}
           <div className="text-xs text-gray-500 flex items-center space-x-2 bg-gray-50 px-3 py-2 rounded-lg">
