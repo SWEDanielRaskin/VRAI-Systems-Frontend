@@ -411,75 +411,107 @@ const Messages = () => {
           </div>
         </div>
         {/* Conversation Detail */}
-        <div className="lg:col-span-2 card flex flex-col h-full min-h-0 overflow-y-auto">
+        <div className="lg:col-span-2 card flex flex-col h-full min-h-0">
           {loadingDetails ? (
             <div className="flex items-center justify-center h-full">
               <RefreshCw className="h-8 w-8 animate-spin text-primary-600" />
             </div>
           ) : selectedConversation ? (
             <>
-              {/* Conversation Header */}
-              <div className="border-b border-gray-200 pb-4 mb-4">
-                <div className="flex items-center space-x-3">
-                  <div className="bg-primary-100 rounded-full p-2">
-                    <MessageSquare className="h-5 w-5 text-primary-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">
-                      {selectedConversation.customerName}
-                    </h3>
-                    <p className="text-sm text-gray-500">
-                      {selectedConversation.phone}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* AI Summary */}
-              <div className="bg-blue-50 rounded-lg p-4 mb-4">
-                <div className="flex items-center space-x-2 mb-2">
-                  <Sparkles className="h-4 w-4 text-blue-600" />
-                  <h4 className="font-medium text-blue-900">AI Summary</h4>
-                </div>
-                <p className="text-sm text-blue-800">
-                  {selectedConversation.summary ||
-                    'AI summary will be generated automatically after a few messages'}
-                </p>
-              </div>
-
-              {/* Messages */}
+              {/* Messages and Content - All Scrollable on Mobile, Fixed Header on Desktop */}
               {selectedConversation.messages &&
               selectedConversation.messages.length > 0 ? (
                 <div
                   ref={messagesPanelRef}
-                  className="flex-1 min-h-0 overflow-y-auto space-y-4 mb-4"
+                  className="flex-1 min-h-0 overflow-y-auto mb-4"
                 >
-                  {selectedConversation.messages.map((msg, index) => (
-                    <div
-                      key={index}
-                      className={`flex ${
-                        msg.sender === 'customer'
-                          ? 'justify-start'
-                          : 'justify-end'
-                      }`}
-                    >
-                      <div
-                        className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                          msg.sender === 'customer'
-                            ? 'bg-gray-100 text-gray-900'
-                            : 'bg-primary-600 text-white'
-                        }`}
-                      >
-                        <p className="text-sm">{msg.message}</p>
-                        <div className="flex items-center justify-end mt-1 space-x-1">
-                          <Clock className="h-3 w-3 opacity-70" />
-                          <p className="text-xs opacity-70">
-                            {formatSmartTimestamp(msg.timestamp)}
-                          </p>
-                        </div>
+                  {/* Conversation Header - Scrollable on Mobile */}
+                  <div className="border-b border-gray-200 pb-4 mb-4 md:hidden">
+                    <div className="flex items-center space-x-3">
+                      <div className="bg-primary-100 rounded-full p-2">
+                        <MessageSquare className="h-5 w-5 text-primary-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-gray-900">
+                          {selectedConversation.customerName}
+                        </h3>
+                        <p className="text-sm text-gray-500">
+                          {selectedConversation.phone}
+                        </p>
                       </div>
                     </div>
-                  ))}
+                  </div>
+
+                  {/* AI Summary - Scrollable on Mobile */}
+                  <div className="bg-blue-50 rounded-lg p-4 mb-4 md:hidden">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <Sparkles className="h-4 w-4 text-blue-600" />
+                      <h4 className="font-medium text-blue-900">AI Summary</h4>
+                    </div>
+                    <p className="text-sm text-blue-800">
+                      {selectedConversation.summary ||
+                        'AI summary will be generated automatically after a few messages'}
+                    </p>
+                  </div>
+
+                  {/* Desktop Fixed Header - Hidden on Mobile */}
+                  <div className="border-b border-gray-200 pb-4 mb-4 hidden md:block">
+                    <div className="flex items-center space-x-3">
+                      <div className="bg-primary-100 rounded-full p-2">
+                        <MessageSquare className="h-5 w-5 text-primary-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-gray-900">
+                          {selectedConversation.customerName}
+                        </h3>
+                        <p className="text-sm text-gray-500">
+                          {selectedConversation.phone}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Desktop Fixed AI Summary - Hidden on Mobile */}
+                  <div className="bg-blue-50 rounded-lg p-4 mb-4 hidden md:block">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <Sparkles className="h-4 w-4 text-blue-600" />
+                      <h4 className="font-medium text-blue-900">AI Summary</h4>
+                    </div>
+                    <p className="text-sm text-blue-800">
+                      {selectedConversation.summary ||
+                        'AI summary will be generated automatically after a few messages'}
+                    </p>
+                  </div>
+
+                  {/* Messages */}
+                  <div className="space-y-4">
+                    {selectedConversation.messages.map((msg, index) => (
+                      <div
+                        key={index}
+                        className={`flex ${
+                          msg.sender === 'customer'
+                            ? 'justify-start'
+                            : 'justify-end'
+                        }`}
+                      >
+                        <div
+                          className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+                            msg.sender === 'customer'
+                              ? 'bg-gray-100 text-gray-900'
+                              : 'bg-primary-600 text-white'
+                          }`}
+                        >
+                          <p className="text-sm">{msg.message}</p>
+                          <div className="flex items-center justify-end mt-1 space-x-1">
+                            <Clock className="h-3 w-3 opacity-70" />
+                            <p className="text-xs opacity-70">
+                              {formatSmartTimestamp(msg.timestamp)}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ) : (
                 <div className="flex-1 flex items-center justify-center text-gray-500">
