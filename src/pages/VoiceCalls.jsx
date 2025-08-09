@@ -175,8 +175,8 @@ const VoiceCalls = () => {
 
   if (loading) {
     return (
-      <div className="space-y-6">
-        <div className="flex items-center space-x-4">
+      <div className="space-y-4 md:space-y-6">
+        <div className="flex items-center space-x-3 md:space-x-4">
           <button
             onClick={() => navigate('/')}
             className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
@@ -184,10 +184,10 @@ const VoiceCalls = () => {
             <ArrowLeft className="h-5 w-5 text-gray-600" />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
               Voice Calls Today
             </h1>
-            <p className="text-gray-600 mt-1">
+            <p className="text-sm md:text-base text-gray-600 mt-1">
               Loading voice call conversations...
             </p>
           </div>
@@ -201,8 +201,8 @@ const VoiceCalls = () => {
 
   if (error) {
     return (
-      <div className="space-y-6">
-        <div className="flex items-center space-x-4">
+      <div className="space-y-4 md:space-y-6">
+        <div className="flex items-center space-x-3 md:space-x-4">
           <button
             onClick={() => navigate('/')}
             className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
@@ -210,10 +210,10 @@ const VoiceCalls = () => {
             <ArrowLeft className="h-5 w-5 text-gray-600" />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
               Voice Calls Today
             </h1>
-            <p className="text-gray-600 mt-1">Error loading voice calls</p>
+            <p className="text-sm md:text-base text-gray-600 mt-1">Error loading voice calls</p>
           </div>
         </div>
         <div className="card">
@@ -236,9 +236,9 @@ const VoiceCalls = () => {
   return (
     <div className="flex flex-col h-screen overflow-hidden">
       {/* Header */}
-      <div className="shrink-0">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+      <div className="shrink-0 mb-4 md:mb-6">
+        <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
+          <div className="flex items-center space-x-3 md:space-x-4">
             <button
               onClick={() => navigate('/')}
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
@@ -246,40 +246,41 @@ const VoiceCalls = () => {
               <ArrowLeft className="h-5 w-5 text-gray-600" />
             </button>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
                 Voice Calls Today
               </h1>
-              <p className="text-gray-600 mt-1">
+              <p className="text-sm md:text-base text-gray-600 mt-1">
                 All voice call conversations from today
               </p>
             </div>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 self-start md:self-auto">
             <button
               onClick={fetchVoiceCalls}
-              className="btn-secondary flex items-center space-x-1"
+              className="btn-secondary flex items-center space-x-1 text-sm px-3 py-2"
             >
               <RefreshCw className="h-4 w-4" />
-              <span>Reload</span>
+              <span className="hidden sm:inline">Reload</span>
             </button>
             <a
               href="https://docs.google.com/spreadsheets/d/1yhI8qk__zwjSukjEa2jSo2vb8rYxpzAbiRWOUMUif00/edit?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-secondary flex items-center space-x-1"
+              className="btn-secondary flex items-center space-x-1 text-sm px-3 py-2"
               title="Visit Archive"
             >
-              <span>Visit Archive</span>
+              <span className="hidden sm:inline">Visit Archive</span>
+              <span className="sm:hidden">Archive</span>
               <ExternalLink className="h-4 w-4 ml-1" />
             </a>
           </div>
         </div>
       </div>
       {/* Main grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[calc(100vh-120px)] min-h-0">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 h-[calc(100vh-140px)] md:h-[calc(100vh-120px)] min-h-0">
         {/* Calls List */}
         <div className="card flex flex-col h-full min-h-0 overflow-y-auto">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+          <h2 className="text-base md:text-lg font-semibold text-gray-900 mb-4">
             Today's Calls ({voiceCalls.length})
           </h2>
           <div className="flex-1 min-h-0 overflow-y-auto">
