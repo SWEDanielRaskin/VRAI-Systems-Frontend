@@ -330,7 +330,7 @@ const VoiceCalls = () => {
           </div>
         </div>
         {/* Call Details/Transcript */}
-        <div className="lg:col-span-2 card flex flex-col h-full min-h-0 overflow-y-auto">
+        <div className="lg:col-span-2 card flex flex-col h-full min-h-0">
           {loadingDetails ? (
             <div className="flex items-center justify-center h-full">
               <RefreshCw className="h-8 w-8 animate-spin text-primary-600" />
@@ -338,23 +338,23 @@ const VoiceCalls = () => {
           ) : selectedCall ? (
             <>
               {/* Call Header */}
-              <div className="border-b border-gray-200 pb-4 mb-4">
+              <div className="border-b border-gray-200 pb-2 md:pb-4 mb-2 md:mb-4">
                 <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center space-x-3">
-                    <div className="bg-primary-100 rounded-full p-2">
-                      <User className="h-5 w-5 text-primary-600" />
+                  <div className="flex items-center space-x-2 md:space-x-3">
+                    <div className="bg-primary-100 rounded-full p-1 md:p-2">
+                      <User className="h-4 w-4 md:h-5 md:w-5 text-primary-600" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900">
+                      <h3 className="text-sm md:text-base font-semibold text-gray-900">
                         {selectedCall.customerName || 'Unknown Caller'}
                       </h3>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-xs md:text-sm text-gray-500">
                         {selectedCall.phone}
                       </p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm text-gray-500">
+                    <p className="text-xs md:text-sm text-gray-500">
                       {selectedCall.timestamp}
                     </p>
                     <div className="flex items-center space-x-1 text-xs text-gray-500 mt-1">
@@ -367,20 +367,20 @@ const VoiceCalls = () => {
               </div>
               {/* AI Summary */}
               {selectedCall.type === 'answered_by_ai' && (
-                <div className="bg-blue-50 rounded-lg p-4 mb-4">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <Sparkles className="h-4 w-4 text-blue-600" />
-                    <h4 className="font-medium text-blue-900">AI Summary</h4>
+                <div className="bg-blue-50 rounded-lg p-2 md:p-4 mb-2 md:mb-4">
+                  <div className="flex items-center space-x-2 mb-1 md:mb-2">
+                    <Sparkles className="h-3 w-3 md:h-4 md:w-4 text-blue-600" />
+                    <h4 className="text-sm md:text-base font-medium text-blue-900">AI Summary</h4>
                   </div>
-                  <p className="text-sm text-blue-800">
+                  <p className="text-xs md:text-sm text-blue-800">
                     {selectedCall.summary ||
                       'AI summary will be generated automatically for completed calls'}
                   </p>
                 </div>
               )}
-              {/* Ongoing Call Message */}
+              {/* Transcript Section */}
               {selectedCall.type === 'ongoing_call' ? (
-                <div className="flex-1 flex items-center justify-center text-gray-500 overflow-y-auto">
+                <div className="flex-1 flex items-center justify-center text-gray-500 min-h-0">
                   <div className="text-center">
                     <Phone className="h-12 w-12 mx-auto mb-4 opacity-50" />
                     <p className="font-semibold">
@@ -394,11 +394,11 @@ const VoiceCalls = () => {
                 </div>
               ) : selectedCall.transcript &&
                 selectedCall.transcript.length > 0 ? (
-                <div className="flex-1">
-                  <h4 className="font-medium text-gray-900 mb-3">
+                <div className="flex-1 min-h-0 flex flex-col">
+                  <h4 className="font-medium text-gray-900 mb-2 md:mb-3 text-sm md:text-base">
                     Call Transcript
                   </h4>
-                  <div className="space-y-3">
+                  <div className="flex-1 min-h-0 overflow-y-auto space-y-3 md:space-y-4">
                     {selectedCall.transcript.map((message, index) => (
                       <div
                         key={index}
@@ -426,7 +426,7 @@ const VoiceCalls = () => {
                   </div>
                 </div>
               ) : (
-                <div className="flex-1 flex items-center justify-center text-gray-500">
+                <div className="flex-1 flex items-center justify-center text-gray-500 min-h-0">
                   <div className="text-center">
                     <Phone className="h-12 w-12 mx-auto mb-4 opacity-50" />
                     <p>
