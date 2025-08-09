@@ -388,9 +388,9 @@ const Settings = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       {/* Header with Back Button */}
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-3 md:space-x-4">
         <button
           onClick={() => navigate('/')}
           className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
@@ -398,8 +398,8 @@ const Settings = () => {
           <ArrowLeft className="h-5 w-5 text-gray-600" />
         </button>
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Settings</h1>
-          <p className="text-gray-600 mt-1">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Settings</h1>
+          <p className="text-sm md:text-base text-gray-600 mt-1">
             System configuration and customization
           </p>
         </div>
@@ -407,14 +407,14 @@ const Settings = () => {
 
       {/* AI Operating Hours */}
       <div className="card">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0 mb-6">
           <div className="flex items-center space-x-3">
-            <Clock className="h-6 w-6 text-primary-600" />
+            <Clock className="h-5 w-5 md:h-6 md:w-6 text-primary-600" />
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">
+              <h2 className="text-base md:text-lg font-semibold text-gray-900">
                 AI Operating Hours
               </h2>
-              <p className="text-sm text-gray-600 mt-1">
+              <p className="text-xs md:text-sm text-gray-600 mt-1">
                 These hours define when the AI is active for calls and SMS. They
                 do not change the business hours provided to customers by the
                 AI.
@@ -424,23 +424,23 @@ const Settings = () => {
           {!editingHours ? (
             <button
               onClick={handleEditHours}
-              className="btn-secondary flex items-center space-x-2"
+              className="btn-secondary flex items-center space-x-2 text-sm px-3 py-2 self-start md:self-auto"
             >
               <Edit3 className="h-4 w-4" />
               <span>Edit</span>
             </button>
           ) : (
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 self-start md:self-auto">
               <button
                 onClick={handleSaveHours}
-                className="bg-primary-600 hover:bg-primary-700 text-white font-medium px-4 py-2 rounded-lg transition-colors duration-200 flex items-center space-x-2"
+                className="bg-primary-600 hover:bg-primary-700 text-white font-medium px-3 md:px-4 py-2 rounded-lg transition-colors duration-200 flex items-center space-x-2 text-sm"
               >
                 <Check className="h-4 w-4" />
                 <span>Done</span>
               </button>
               <button
                 onClick={handleCancelHours}
-                className="btn-secondary flex items-center space-x-2"
+                className="btn-secondary flex items-center space-x-2 text-sm px-3 py-2"
               >
                 <X className="h-4 w-4" />
                 <span>Cancel</span>
@@ -449,20 +449,20 @@ const Settings = () => {
           )}
         </div>
 
-        {/* FIXED: Use dayOrder to ensure consistent ordering */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* Mobile: Single column | Desktop: Multi-column grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
           {dayOrder.map((day) => {
             const hours = businessHours[day];
             return (
-              <div key={day} className="bg-gray-50 rounded-lg p-4">
+              <div key={day} className="bg-gray-50 rounded-lg p-3 md:p-4">
                 <div className="flex items-center justify-between mb-3">
-                  <span className="font-medium text-gray-900">{day}</span>
+                  <span className="text-sm md:text-base font-medium text-gray-900">{day}</span>
                   {editingHours && hours.start && hours.end && (
                     <button
                       onClick={() => handleClearHours(day)}
                       className="text-xs text-red-600 hover:text-red-700 px-2 py-1 hover:bg-red-50 rounded"
                     >
-                      Clear Hours
+                      Clear
                     </button>
                   )}
                 </div>
@@ -523,27 +523,27 @@ const Settings = () => {
       </div>
 
       {/* Message Customizer */}
-      <div className="card mb-8">
-        <div className="flex items-center justify-between mb-6">
+      <div className="card mb-6 md:mb-8">
+        <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0 mb-6">
           <div className="flex items-center space-x-3">
-            <Edit3 className="h-6 w-6 text-primary-600" />
+            <Edit3 className="h-5 w-5 md:h-6 md:w-6 text-primary-600" />
             <div>
               <div className="flex items-center space-x-2">
-                <h2 className="text-lg font-semibold text-gray-900">
+                <h2 className="text-base md:text-lg font-semibold text-gray-900">
                   Message Customizer
                 </h2>
                 <span className="px-2 py-1 text-xs font-bold text-white rounded-full" style={{ backgroundColor: currentThemeColor }}>
                   NEW
                 </span>
               </div>
-              <p className="text-sm text-gray-600 mt-1">
+              <p className="text-xs md:text-sm text-gray-600 mt-1">
                 Customize automated messages and appointment reminders
               </p>
             </div>
           </div>
           <button
             onClick={() => navigate('/settings/message-customizer')}
-            className="btn-secondary flex items-center space-x-2"
+            className="btn-secondary flex items-center space-x-2 text-sm px-3 py-2 self-start md:self-auto"
           >
             <Edit3 className="h-4 w-4" />
             <span>Customize</span>
@@ -552,10 +552,10 @@ const Settings = () => {
       </div>
 
       {/* Services Management */}
-      <div className="card mb-8">
+      <div className="card mb-6 md:mb-8">
         <div className="flex items-center space-x-3 mb-6">
-          <SettingsIcon className="h-6 w-6 text-primary-600" />
-          <h2 className="text-lg font-semibold text-gray-900">
+          <SettingsIcon className="h-5 w-5 md:h-6 md:w-6 text-primary-600" />
+          <h2 className="text-base md:text-lg font-semibold text-gray-900">
             Services Management
           </h2>
         </div>
@@ -564,10 +564,10 @@ const Settings = () => {
 
       {/* Knowledge Base */}
       <div className="card">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0 mb-6">
           <div className="flex items-center space-x-3">
-            <BookOpen className="h-6 w-6 text-primary-600" />
-            <h2 className="text-lg font-semibold text-gray-900">
+            <BookOpen className="h-5 w-5 md:h-6 md:w-6 text-primary-600" />
+            <h2 className="text-base md:text-lg font-semibold text-gray-900">
               Knowledge Base
             </h2>
           </div>
@@ -581,17 +581,19 @@ const Settings = () => {
             />
             <button
               onClick={() => document.getElementById('file-upload').click()}
-              className="btn-secondary flex items-center space-x-2"
+              className="btn-secondary flex items-center space-x-2 text-sm px-3 py-2"
             >
               <Upload className="h-4 w-4" />
-              <span>Upload Document</span>
+              <span className="hidden sm:inline">Upload Document</span>
+              <span className="sm:hidden">Upload</span>
             </button>
             <button
               onClick={() => setShowAddLinkModal(true)}
-              className="btn-secondary flex items-center space-x-2"
+              className="btn-secondary flex items-center space-x-2 text-sm px-3 py-2"
             >
               <Link className="h-4 w-4" />
-              <span>Add Link</span>
+              <span className="hidden sm:inline">Add Link</span>
+              <span className="sm:hidden">Link</span>
             </button>
           </div>
         </div>
@@ -621,16 +623,16 @@ const Settings = () => {
             return (
               <div
                 key={item.id}
-                className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+                className="flex items-center justify-between p-3 md:p-4 bg-gray-50 rounded-lg"
               >
-                <div className="flex items-center space-x-3">
-                  <div className="bg-white rounded-lg p-2">
+                <div className="flex items-center space-x-3 min-w-0 flex-1">
+                  <div className="bg-white rounded-lg p-2 flex-shrink-0">
                     {getFileIcon(item.type)}
                   </div>
-                  <div>
-                    <h3 className="font-medium text-gray-900">{item.name}</h3>
-                    <p className="text-sm text-gray-600">{displayUrl}</p>
-                    <div className="flex items-center space-x-4 text-xs text-gray-500 mt-1">
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-medium text-gray-900 text-sm md:text-base truncate">{item.name}</h3>
+                    <p className="text-xs md:text-sm text-gray-600 truncate">{displayUrl}</p>
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 text-xs text-gray-500 mt-1 space-y-1 sm:space-y-0">
                       <span>
                         Added: {new Date(item.created_at).toLocaleDateString()}
                       </span>
@@ -649,7 +651,7 @@ const Settings = () => {
                 </div>
                 <button
                   onClick={() => handleRemoveKnowledgeItem(item.id)}
-                  className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                  className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors flex-shrink-0 ml-2"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
@@ -661,33 +663,33 @@ const Settings = () => {
 
       {/* Staff Management */}
       <div className="card">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0 mb-6">
           <div className="flex items-center space-x-3">
-            <Users className="h-6 w-6 text-primary-600" />
-            <h2 className="text-lg font-semibold text-gray-900">
+            <Users className="h-5 w-5 md:h-6 md:w-6 text-primary-600" />
+            <h2 className="text-base md:text-lg font-semibold text-gray-900">
               Staff Management
             </h2>
           </div>
           {!editingStaff ? (
             <button
               onClick={handleEditStaff}
-              className="btn-secondary flex items-center space-x-2"
+              className="btn-secondary flex items-center space-x-2 text-sm px-3 py-2 self-start md:self-auto"
             >
               <Edit3 className="h-4 w-4" />
               <span>Edit</span>
             </button>
           ) : (
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 self-start md:self-auto">
               <button
                 onClick={handleSaveStaff}
-                className="bg-primary-600 hover:bg-primary-700 text-white font-medium px-4 py-2 rounded-lg transition-colors duration-200 flex items-center space-x-2"
+                className="bg-primary-600 hover:bg-primary-700 text-white font-medium px-3 md:px-4 py-2 rounded-lg transition-colors duration-200 flex items-center space-x-2 text-sm"
               >
                 <Check className="h-4 w-4" />
                 <span>Done</span>
               </button>
               <button
                 onClick={handleCancelStaff}
-                className="btn-secondary flex items-center space-x-2"
+                className="btn-secondary flex items-center space-x-2 text-sm px-3 py-2"
               >
                 <X className="h-4 w-4" />
                 <span>Cancel</span>
@@ -700,13 +702,13 @@ const Settings = () => {
           {staff.map((member) => (
             <div
               key={member.id || member.name}
-              className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+              className="flex items-center justify-between p-3 md:p-4 bg-gray-50 rounded-lg"
             >
-              <div className="flex items-center space-x-3">
-                <div className="bg-primary-100 rounded-full p-2">
+              <div className="flex items-center space-x-3 min-w-0 flex-1">
+                <div className="bg-primary-100 rounded-full p-2 flex-shrink-0">
                   <Users className="h-4 w-4 text-primary-600" />
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 min-w-0">
                   {editingStaff ? (
                     <div className="space-y-2">
                       <input
@@ -771,7 +773,7 @@ const Settings = () => {
               {editingStaff && (
                 <button
                   onClick={() => handleRemoveStaff(member.id)}
-                  className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors ml-4"
+                  className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors ml-2 flex-shrink-0"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
@@ -780,14 +782,14 @@ const Settings = () => {
           ))}
 
           {editingStaff && (
-            <div className="p-4 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
+            <div className="p-3 md:p-4 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
               <div className="space-y-3">
                 <input
                   type="text"
                   value={newStaffName}
                   onChange={(e) => setNewStaffName(e.target.value)}
                   placeholder="Enter staff member name"
-                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
                   onKeyPress={(e) => e.key === 'Enter' && handleAddStaff()}
                 />
                 <input
@@ -795,7 +797,7 @@ const Settings = () => {
                   value={newStaffPosition}
                   onChange={(e) => setNewStaffPosition(e.target.value)}
                   placeholder="Position (e.g., Specialist, Medical Director)"
-                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
                   onKeyPress={(e) => e.key === 'Enter' && handleAddStaff()}
                 />
                 <div className="flex items-center space-x-2">
@@ -815,7 +817,7 @@ const Settings = () => {
                 </div>
                 <button
                   onClick={handleAddStaff}
-                  className="bg-primary-600 hover:bg-primary-700 text-white font-medium px-4 py-2 rounded-lg transition-colors duration-200 flex items-center space-x-2"
+                  className="bg-primary-600 hover:bg-primary-700 text-white font-medium px-3 md:px-4 py-2 rounded-lg transition-colors duration-200 flex items-center space-x-2 text-sm w-full sm:w-auto"
                 >
                   <Plus className="h-4 w-4" />
                   <span>Add Staff Member</span>
@@ -828,14 +830,12 @@ const Settings = () => {
 
       {/* Color Theme */}
       <div className="card">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-3">
-            <Palette className="h-6 w-6 text-primary-600" />
-            <h2 className="text-lg font-semibold text-gray-900">Color Theme</h2>
-          </div>
+        <div className="flex items-center space-x-3 mb-6">
+          <Palette className="h-5 w-5 md:h-6 md:w-6 text-primary-600" />
+          <h2 className="text-base md:text-lg font-semibold text-gray-900">Color Theme</h2>
         </div>
 
-        <div className="flex items-center space-x-4">
+        <div className="flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
           <div className="flex items-center space-x-3">
             <span className="text-sm font-medium text-gray-700">
               Primary Color:
@@ -845,7 +845,7 @@ const Settings = () => {
               className="w-10 h-10 rounded-lg border-2 border-gray-300 shadow-sm hover:shadow-md transition-shadow"
               style={{ backgroundColor: currentThemeColor }}
             />
-            <span className="text-sm text-gray-600 font-mono">
+            <span className="text-xs md:text-sm text-gray-600 font-mono">
               {currentThemeColor.toUpperCase()}
             </span>
           </div>
