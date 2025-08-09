@@ -277,7 +277,7 @@ const VoiceCalls = () => {
         </div>
       </div>
       {/* Main grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 h-[calc(100vh-220px)] md:h-[calc(100vh-168px)] min-h-0">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 h-[calc(100vh-40px)] md:h-[calc(100vh-120px)] min-h-0">
         {/* Calls List */}
         <div className="card flex flex-col h-full min-h-0 overflow-y-auto">
           <h2 className="text-base md:text-lg font-semibold text-gray-900 mb-4">

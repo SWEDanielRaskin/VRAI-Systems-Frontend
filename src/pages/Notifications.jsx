@@ -235,8 +235,8 @@ const Notifications = () => {
 
   if (loading) {
     return (
-      <div className="space-y-6">
-        <div className="flex items-center space-x-4">
+      <div className="space-y-4 md:space-y-6">
+        <div className="flex items-center space-x-3 md:space-x-4">
           <button
             onClick={() => navigate('/')}
             className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
@@ -244,8 +244,8 @@ const Notifications = () => {
             <ArrowLeft className="h-5 w-5 text-gray-600" />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Notifications</h1>
-            <p className="text-gray-600 mt-1">Loading notifications...</p>
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Notifications</h1>
+            <p className="text-sm md:text-base text-gray-600 mt-1">Loading notifications...</p>
           </div>
         </div>
         <div className="flex items-center justify-center h-64">
@@ -257,8 +257,8 @@ const Notifications = () => {
 
   if (error) {
     return (
-      <div className="space-y-6">
-        <div className="flex items-center space-x-4">
+      <div className="space-y-4 md:space-y-6">
+        <div className="flex items-center space-x-3 md:space-x-4">
           <button
             onClick={() => navigate('/')}
             className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
@@ -266,8 +266,8 @@ const Notifications = () => {
             <ArrowLeft className="h-5 w-5 text-gray-600" />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Notifications</h1>
-            <p className="text-gray-600 mt-1">Error loading notifications</p>
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Notifications</h1>
+            <p className="text-sm md:text-base text-gray-600 mt-1">Error loading notifications</p>
           </div>
         </div>
         <div className="card">
@@ -276,7 +276,7 @@ const Notifications = () => {
             <p className="text-red-600 mb-4">{error}</p>
             <button
               onClick={fetchNotifications}
-              className="btn-primary flex items-center space-x-2 mx-auto"
+              className="btn-primary flex items-center space-x-2 mx-auto text-sm px-3 py-2"
             >
               <RefreshCw className="h-4 w-4" />
               <span>Retry</span>
@@ -289,9 +289,9 @@ const Notifications = () => {
 
   if (selectedNotification) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-4 md:space-y-6">
         {/* Header */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-3 md:space-x-4">
           <button
             onClick={() => setSelectedNotification(null)}
             className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
@@ -299,30 +299,30 @@ const Notifications = () => {
             <ArrowLeft className="h-5 w-5 text-gray-600" />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
               Notification Details
             </h1>
-            <p className="text-gray-600 mt-1">{selectedNotification.title}</p>
+            <p className="text-sm md:text-base text-gray-600 mt-1">{selectedNotification.title}</p>
           </div>
         </div>
 
         {/* Notification Detail */}
         <div className="card">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center space-x-3">
+          <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0 mb-4 md:mb-6">
+            <div className="flex items-center space-x-2 md:space-x-3">
               {getNotificationIcon(selectedNotification.type)}
               <div>
-                <h2 className="text-lg font-semibold text-gray-900">
+                <h2 className="text-base md:text-lg font-semibold text-gray-900">
                   {selectedNotification.title}
                 </h2>
-                <p className="text-sm text-gray-600">
+                <p className="text-xs md:text-sm text-gray-600">
                   {selectedNotification.summary}
                 </p>
               </div>
             </div>
-            <div className="flex items-center space-x-3">
+            <div className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-3">
               <span
-                className={`px-3 py-1 rounded-full text-sm font-medium ${
+                className={`px-3 py-1 rounded-full text-xs md:text-sm font-medium text-center ${
                   selectedNotification.resolved
                     ? 'bg-green-100 text-green-800'
                     : getNotificationBgColor(selectedNotification.type)
@@ -341,17 +341,18 @@ const Notifications = () => {
                   onClick={() =>
                     handleResolveNotification(selectedNotification.id)
                   }
-                  className="btn-primary flex items-center space-x-2"
+                  className="btn-primary flex items-center space-x-2 text-sm px-3 py-2 w-full sm:w-auto"
                 >
                   <CheckCircle className="h-4 w-4" />
-                  <span>Mark as Resolved</span>
+                  <span className="hidden sm:inline">Mark as Resolved</span>
+                  <span className="sm:hidden">Resolve</span>
                 </button>
               ) : (
                 <button
                   onClick={() =>
                     handleClearNotification(selectedNotification.id)
                   }
-                  className="bg-red-600 hover:bg-red-700 text-white font-medium px-4 py-2 rounded-lg transition-colors duration-200 flex items-center space-x-2"
+                  className="bg-red-600 hover:bg-red-700 text-white font-medium px-3 py-2 rounded-lg transition-colors duration-200 flex items-center space-x-2 text-sm w-full sm:w-auto"
                 >
                   <X className="h-4 w-4" />
                   <span>Clear</span>
@@ -361,11 +362,11 @@ const Notifications = () => {
           </div>
 
           {/* Customer Info */}
-          <div className="bg-gray-50 rounded-lg p-4 mb-6">
-            <h3 className="font-medium text-gray-900 mb-2">
+          <div className="bg-gray-50 rounded-lg p-3 md:p-4 mb-4 md:mb-6">
+            <h3 className="text-sm md:text-base font-medium text-gray-900 mb-2">
               Customer Information
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 text-xs md:text-sm">
               <div>
                 <span className="font-medium text-gray-700">Name:</span>
                 <span className="ml-2 text-gray-600">
@@ -378,7 +379,7 @@ const Notifications = () => {
                   {selectedNotification.phone}
                 </span>
               </div>
-              <div>
+              <div className="sm:col-span-2 lg:col-span-1">
                 <span className="font-medium text-gray-700">Time:</span>
                 <span className="ml-2 text-gray-600">
                   {formatTimestamp(selectedNotification.created_at)}
@@ -393,25 +394,25 @@ const Notifications = () => {
             </div>
           ) : notificationTranscript &&
             notificationTranscript.type === 'voice' ? (
-            <div className="mt-6">
+            <div className="mt-4 md:mt-6">
               {/* AI Summary */}
               {notificationTranscript.summary && (
-                <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <Sparkles className="h-4 w-4 text-blue-600" />
-                    <h4 className="font-medium text-blue-900">AI Summary</h4>
+                <div className="mb-4 md:mb-6 p-3 md:p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                  <div className="flex items-center space-x-2 mb-1 md:mb-2">
+                    <Sparkles className="h-3 w-3 md:h-4 md:w-4 text-blue-600" />
+                    <h4 className="text-sm md:text-base font-medium text-blue-900">AI Summary</h4>
                   </div>
-                  <p className="text-sm text-blue-800">
+                  <p className="text-xs md:text-sm text-blue-800">
                     {notificationTranscript.summary}
                   </p>
                 </div>
               )}
 
-              <h3 className="font-medium text-gray-900 mb-2">
+              <h3 className="text-sm md:text-base font-medium text-gray-900 mb-2 md:mb-3">
                 Call Transcript
               </h3>
               {notificationTranscript.transcript.length > 0 ? (
-                <div className="space-y-3">
+                <div className="space-y-3 md:space-y-4">
                   {notificationTranscript.transcript.map((message, idx) => (
                     <div
                       key={idx}
@@ -422,13 +423,13 @@ const Notifications = () => {
                       }`}
                     >
                       <div
-                        className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+                        className={`max-w-xs lg:max-w-md px-3 md:px-4 py-2 rounded-lg ${
                           ['user', 'customer'].includes(message.speaker)
                             ? 'bg-gray-100 text-gray-900'
                             : 'bg-primary-600 text-white'
                         }`}
                       >
-                        <p className="text-sm italic">"{message.text}"</p>
+                        <p className="text-xs md:text-sm italic">"{message.text}"</p>
                         <div className="flex items-center justify-end mt-1 space-x-1">
                           <Clock className="h-3 w-3 opacity-70" />
                           <p className="text-xs opacity-70">
@@ -440,32 +441,32 @@ const Notifications = () => {
                   ))}
                 </div>
               ) : (
-                <div className="text-gray-500">
+                <div className="text-gray-500 text-sm">
                   No transcript available for this call.
                 </div>
               )}
             </div>
           ) : notificationTranscript &&
             notificationTranscript.type === 'sms' ? (
-            <div className="mt-6">
+            <div className="mt-4 md:mt-6">
               {/* AI Summary */}
               {notificationTranscript.summary && (
-                <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <Sparkles className="h-4 w-4 text-blue-600" />
-                    <h4 className="font-medium text-blue-900">AI Summary</h4>
+                <div className="mb-4 md:mb-6 p-3 md:p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                  <div className="flex items-center space-x-2 mb-1 md:mb-2">
+                    <Sparkles className="h-3 w-3 md:h-4 md:w-4 text-blue-600" />
+                    <h4 className="text-sm md:text-base font-medium text-blue-900">AI Summary</h4>
                   </div>
-                  <p className="text-sm text-blue-800">
+                  <p className="text-xs md:text-sm text-blue-800">
                     {notificationTranscript.summary}
                   </p>
                 </div>
               )}
 
-              <h3 className="font-medium text-gray-900 mb-2">
+              <h3 className="text-sm md:text-base font-medium text-gray-900 mb-2 md:mb-3">
                 Message Conversation
               </h3>
               {notificationTranscript.messages.length > 0 ? (
-                <div className="space-y-3">
+                <div className="space-y-3 md:space-y-4">
                   {notificationTranscript.messages.map((msg, idx) => (
                     <div
                       key={idx}
@@ -476,13 +477,13 @@ const Notifications = () => {
                       }`}
                     >
                       <div
-                        className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+                        className={`max-w-xs lg:max-w-md px-3 md:px-4 py-2 rounded-lg ${
                           msg.sender === 'customer'
                             ? 'bg-gray-100 text-gray-900'
                             : 'bg-primary-600 text-white'
                         }`}
                       >
-                        <p className="text-sm">{msg.message}</p>
+                        <p className="text-xs md:text-sm">{msg.message}</p>
                         <div className="flex items-center justify-end mt-1 space-x-1">
                           <Clock className="h-3 w-3 opacity-70" />
                           <p className="text-xs opacity-70">
@@ -494,7 +495,7 @@ const Notifications = () => {
                   ))}
                 </div>
               ) : (
-                <div className="text-gray-500">
+                <div className="text-gray-500 text-sm">
                   No messages available for this conversation.
                 </div>
               )}
@@ -506,10 +507,10 @@ const Notifications = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
+      <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
+        <div className="flex items-center space-x-3 md:space-x-4">
           <button
             onClick={() => navigate('/')}
             className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
@@ -517,8 +518,8 @@ const Notifications = () => {
             <ArrowLeft className="h-5 w-5 text-gray-600" />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Notifications</h1>
-            <p className="text-gray-600 mt-1">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Notifications</h1>
+            <p className="text-sm md:text-base text-gray-600 mt-1">
               AI-generated alerts requiring attention
             </p>
           </div>
@@ -526,19 +527,20 @@ const Notifications = () => {
         <div className="flex items-center space-x-2">
           <button
             onClick={fetchNotifications}
-            className="btn-secondary flex items-center space-x-1"
+            className="btn-secondary flex items-center space-x-1 text-sm px-3 py-2"
           >
             <RefreshCw className="h-4 w-4" />
-            <span>Reload</span>
+            <span className="hidden sm:inline">Reload</span>
           </button>
           <a
             href="https://docs.google.com/spreadsheets/d/1qiGx2czQpe-DejlGBRAfRXp5g9QzCPRuLr9E7GTg0g8/edit?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-secondary flex items-center space-x-1"
+            className="btn-secondary flex items-center space-x-1 text-sm px-3 py-2"
             title="Visit Archive"
           >
-            <span>Visit Archive</span>
+            <span className="hidden sm:inline">Visit Archive</span>
+            <span className="sm:hidden">Archive</span>
             <ExternalLink className="h-4 w-4 ml-1" />
           </a>
         </div>
@@ -554,7 +556,7 @@ const Notifications = () => {
           </div>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3 md:space-y-4">
           {sortedNotifications.map((notification) => (
             <div
               key={notification.id}
@@ -563,26 +565,26 @@ const Notifications = () => {
                 notification.resolved ? 'opacity-60' : ''
               } ${getNotificationBgColor(notification.type)}`}
             >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4 flex-1">
+              <div className="flex flex-col space-y-3 md:flex-row md:items-center md:justify-between md:space-y-0">
+                <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-4 flex-1">
                   <div className="flex items-center space-x-2">
                     {getNotificationIcon(notification.type)}
-                    <span className="text-sm font-medium text-gray-700">
+                    <span className="text-xs md:text-sm font-medium text-gray-700">
                       {getNotificationTypeLabel(notification.type)}
                     </span>
                   </div>
 
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-gray-900 mb-1">
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-sm md:text-base font-semibold text-gray-900 mb-1">
                       {notification.title}
                     </h3>
-                    <p className="text-sm text-gray-600 mb-2">
+                    <p className="text-xs md:text-sm text-gray-600 mb-2">
                       {notification.summary}
                     </p>
-                    <div className="flex items-center space-x-4 text-xs text-gray-500">
+                    <div className="flex flex-col space-y-1 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-4 text-xs text-gray-500">
                       <div className="flex items-center space-x-1">
                         <Phone className="h-3 w-3" />
-                        <span>{notification.phone}</span>
+                        <span className="truncate">{notification.phone}</span>
                       </div>
                       <div className="flex items-center space-x-1">
                         <Clock className="h-3 w-3" />
@@ -604,9 +606,9 @@ const Notifications = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2 md:space-x-3">
                   {notification.resolved && (
-                    <span className="status-badge status-active">Resolved</span>
+                    <span className="status-badge status-active text-xs">Resolved</span>
                   )}
                   {!notification.resolved ? (
                     <button
@@ -614,9 +616,10 @@ const Notifications = () => {
                         e.stopPropagation();
                         handleResolveNotification(notification.id);
                       }}
-                      className="btn-secondary text-xs"
+                      className="btn-secondary text-xs px-3 py-1 w-full sm:w-auto"
                     >
-                      Mark Resolved
+                      <span className="hidden sm:inline">Mark Resolved</span>
+                      <span className="sm:hidden">Resolve</span>
                     </button>
                   ) : (
                     <button
@@ -624,7 +627,7 @@ const Notifications = () => {
                         e.stopPropagation();
                         handleClearNotification(notification.id);
                       }}
-                      className="bg-red-600 hover:bg-red-700 text-white font-medium px-3 py-1 rounded text-xs transition-colors duration-200 flex items-center space-x-1"
+                      className="bg-red-600 hover:bg-red-700 text-white font-medium px-3 py-1 rounded text-xs transition-colors duration-200 flex items-center space-x-1 w-full sm:w-auto justify-center"
                     >
                       <X className="h-3 w-3" />
                       <span>Clear</span>
