@@ -539,4 +539,101 @@ export const initializeMessageTemplates = async () => {
   }
 };
 
+// ==================== SERVICES API ====================
+
+// Get all services
+export const getServices = async () => {
+  try {
+    const response = await api.get('/api/services');
+    return response.data;
+  } catch (error) {
+    console.error('API Error - getServices:', error);
+    throw error;
+  }
+};
+
+// Get a specific service
+export const getService = async (serviceId) => {
+  try {
+    const response = await api.get(`/api/services/${serviceId}`);
+    return response.data;
+  } catch (error) {
+    console.error('API Error - getService:', error);
+    throw error;
+  }
+};
+
+// Add a new service
+export const addService = async (serviceData) => {
+  try {
+    const response = await api.post('/api/services', serviceData);
+    return response.data;
+  } catch (error) {
+    console.error('API Error - addService:', error);
+    throw error;
+  }
+};
+
+// Update a service
+export const updateService = async (serviceId, serviceData) => {
+  try {
+    const response = await api.put(`/api/services/${serviceId}`, serviceData);
+    return response.data;
+  } catch (error) {
+    console.error('API Error - updateService:', error);
+    throw error;
+  }
+};
+
+// Delete a service
+export const deleteService = async (serviceId) => {
+  try {
+    const response = await api.delete(`/api/services/${serviceId}`);
+    return response.data;
+  } catch (error) {
+    console.error('API Error - deleteService:', error);
+    throw error;
+  }
+};
+
+// Upload services document
+export const uploadServicesDocument = async (file) => {
+  try {
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    const response = await api.post('/api/services/upload-document', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('API Error - uploadServicesDocument:', error);
+    throw error;
+  }
+};
+
+// Parse services document
+export const parseServicesDocument = async (filePath) => {
+  try {
+    const response = await api.post('/api/services/parse-document', { file_path: filePath });
+    return response.data;
+  } catch (error) {
+    console.error('API Error - parseServicesDocument:', error);
+    throw error;
+  }
+};
+
+// Save services
+export const saveServices = async (servicesData) => {
+  try {
+    const response = await api.post('/api/services/save', servicesData);
+    return response.data;
+  } catch (error) {
+    console.error('API Error - saveServices:', error);
+    throw error;
+  }
+};
+
 export default api;

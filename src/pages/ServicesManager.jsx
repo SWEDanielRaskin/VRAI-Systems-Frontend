@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Upload, ExternalLink, X } from 'lucide-react';
+import { 
+  getServices, 
+  addService as addServiceAPI, 
+  updateService as updateServiceAPI, 
+  deleteService as deleteServiceAPI,
+  uploadServicesDocument,
+  parseServicesDocument,
+  saveServices as saveServicesAPI
+} from '../services/api';
 
 const defaultColumns = [
   { key: 'name', label: 'Service Name' },
@@ -54,30 +62,20 @@ export default function ServicesManager() {
     setSuccess('');
     try {
       // 1. Upload file
-      const formData = new FormData();
-      formData.append('file', file);
-      const uploadRes = await axios.post(
-        '/api/services/upload-document',
-        formData,
-        {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        }
-      );
-      if (!uploadRes.data.success)
-        throw new Error(uploadRes.data.error || 'Upload failed');
+      const uploadRes = await uploadServicesDocument(file);
+      if (!uploadRes.success)
+        throw new Error(uploadRes.error || 'Upload failed');
       // 2. Parse file
-      const parseRes = await axios.post('/api/services/parse-document', {
-        file_path: uploadRes.data.file_path,
-      });
-      if (!parseRes.data.success)
-        throw new Error(parseRes.data.error || 'Parse failed');
+      const parseRes = await parseServicesDocument(uploadRes.file_path);
+      if (!parseRes.success)
+        throw new Error(parseRes.error || 'Parse failed');
       // 3. Save parsed services directly to DB
-      const saveRes = await axios.post('/api/services/save', {
-        services: parseRes.data.services,
+      const saveRes = await saveServicesAPI({
+        services: parseRes.services,
       });
-      if (!saveRes.data.success)
-        throw new Error(saveRes.data.error || 'Save failed');
-      setSuccess(`Saved ${saveRes.data.added} services!`);
+      if (!saveRes.success)
+        throw new Error(saveRes.error || 'Save failed');
+      setSuccess(`Saved ${saveRes.added} services!`);
       setStep(1); // Reset step
       setFile(null);
       fetchServices(); // Refresh table
@@ -123,12 +121,12 @@ export default function ServicesManager() {
     setError('');
     setSuccess('');
     try {
-      const saveRes = await axios.post('/api/services/save', {
+      const saveRes = await saveServicesAPI({
         services: preview,
       });
-      if (!saveRes.data.success)
-        throw new Error(saveRes.data.error || 'Save failed');
-      setSuccess(`Saved ${saveRes.data.added} services!`);
+      if (!saveRes.success)
+        throw new Error(saveRes.error || 'Save failed');
+      setSuccess(`Saved ${saveRes.added} services!`);
       setStep(3);
     } catch (err) {
       setError(err.message || 'Error saving services.');
@@ -142,10 +140,10 @@ export default function ServicesManager() {
     setServicesLoading(true);
     setServicesError('');
     try {
-      const res = await axios.get('/api/services');
-      if (!res.data.success)
-        throw new Error(res.data.error || 'Failed to fetch services');
-      setServices(res.data.services);
+      const res = await getServices();
+      if (!res.success)
+        throw new Error(res.error || 'Failed to fetch services');
+      setServices(res.services);
     } catch (err) {
       setServicesError(err.message || 'Error fetching services');
     } finally {
@@ -165,7 +163,7 @@ export default function ServicesManager() {
   // Save edit
   const handleSaveEdit = async (id) => {
     try {
-      await axios.put(`/api/services/${id}`, editRow);
+      await updateServiceAPI(id, editRow);
       setEditIdx(null);
       setEditRow(null);
       fetchServices();
@@ -182,7 +180,7 @@ export default function ServicesManager() {
   // Delete row
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/api/services/${id}`);
+      await deleteServiceAPI(id);
       fetchServices();
       setSuccess('Service deleted!');
     } catch (err) {
@@ -192,7 +190,7 @@ export default function ServicesManager() {
   // Add new service
   const handleAddService = async () => {
     try {
-      await axios.post('/api/services', addRow);
+      await addServiceAPI(addRow);
       setAddRow({
         name: '',
         price: 0,
@@ -213,7 +211,7 @@ export default function ServicesManager() {
   const confirmDeleteAllServices = async () => {
     try {
       await Promise.all(
-        services.map((s) => axios.delete(`/api/services/${s.id}`))
+        services.map((s) => deleteServiceAPI(s.id))
       );
       fetchServices();
       setSuccess('All services deleted!');
