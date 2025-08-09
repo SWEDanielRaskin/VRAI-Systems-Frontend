@@ -552,24 +552,13 @@ export const getServices = async () => {
   }
 };
 
-// Get a specific service
-export const getService = async (serviceId) => {
-  try {
-    const response = await api.get(`/api/services/${serviceId}`);
-    return response.data;
-  } catch (error) {
-    console.error('API Error - getService:', error);
-    throw error;
-  }
-};
-
-// Add a new service
-export const addService = async (serviceData) => {
+// Create a new service
+export const createService = async (serviceData) => {
   try {
     const response = await api.post('/api/services', serviceData);
     return response.data;
   } catch (error) {
-    console.error('API Error - addService:', error);
+    console.error('API Error - createService:', error);
     throw error;
   }
 };
@@ -617,7 +606,9 @@ export const uploadServicesDocument = async (file) => {
 // Parse services document
 export const parseServicesDocument = async (filePath) => {
   try {
-    const response = await api.post('/api/services/parse-document', { file_path: filePath });
+    const response = await api.post('/api/services/parse-document', {
+      file_path: filePath,
+    });
     return response.data;
   } catch (error) {
     console.error('API Error - parseServicesDocument:', error);
@@ -625,10 +616,12 @@ export const parseServicesDocument = async (filePath) => {
   }
 };
 
-// Save services
-export const saveServices = async (servicesData) => {
+// Save multiple services
+export const saveServices = async (services) => {
   try {
-    const response = await api.post('/api/services/save', servicesData);
+    const response = await api.post('/api/services/save', {
+      services: services,
+    });
     return response.data;
   } catch (error) {
     console.error('API Error - saveServices:', error);

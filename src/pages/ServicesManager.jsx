@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Upload, ExternalLink, X } from 'lucide-react';
-import { 
-  getServices, 
-  addService as addServiceAPI, 
-  updateService as updateServiceAPI, 
-  deleteService as deleteServiceAPI,
+import {
+  getServices,
+  createService,
+  updateService,
+  deleteService,
   uploadServicesDocument,
   parseServicesDocument,
-  saveServices as saveServicesAPI
+  saveServices,
 } from '../services/api';
 
 const defaultColumns = [
@@ -70,9 +70,7 @@ export default function ServicesManager() {
       if (!parseRes.success)
         throw new Error(parseRes.error || 'Parse failed');
       // 3. Save parsed services directly to DB
-      const saveRes = await saveServicesAPI({
-        services: parseRes.services,
-      });
+      const saveRes = await saveServices(parseRes.services);
       if (!saveRes.success)
         throw new Error(saveRes.error || 'Save failed');
       setSuccess(`Saved ${saveRes.added} services!`);
@@ -121,9 +119,7 @@ export default function ServicesManager() {
     setError('');
     setSuccess('');
     try {
-      const saveRes = await saveServicesAPI({
-        services: preview,
-      });
+      const saveRes = await saveServices(preview);
       if (!saveRes.success)
         throw new Error(saveRes.error || 'Save failed');
       setSuccess(`Saved ${saveRes.added} services!`);
@@ -163,7 +159,7 @@ export default function ServicesManager() {
   // Save edit
   const handleSaveEdit = async (id) => {
     try {
-      await updateServiceAPI(id, editRow);
+      await updateService(id, editRow);
       setEditIdx(null);
       setEditRow(null);
       fetchServices();
@@ -180,7 +176,7 @@ export default function ServicesManager() {
   // Delete row
   const handleDelete = async (id) => {
     try {
-      await deleteServiceAPI(id);
+      await deleteService(id);
       fetchServices();
       setSuccess('Service deleted!');
     } catch (err) {
@@ -190,7 +186,7 @@ export default function ServicesManager() {
   // Add new service
   const handleAddService = async () => {
     try {
-      await addServiceAPI(addRow);
+      await createService(addRow);
       setAddRow({
         name: '',
         price: 0,
@@ -211,7 +207,7 @@ export default function ServicesManager() {
   const confirmDeleteAllServices = async () => {
     try {
       await Promise.all(
-        services.map((s) => deleteServiceAPI(s.id))
+        services.map((s) => deleteService(s.id))
       );
       fetchServices();
       setSuccess('All services deleted!');
