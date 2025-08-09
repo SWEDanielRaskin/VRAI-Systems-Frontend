@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, Link, Plus, Loader2 } from 'lucide-react';
+import { extractLinks } from '../services/api';
 
 // New multi-select modal for page selection
 const COMMON_PATHS = [
@@ -162,12 +163,7 @@ const AddLinkModal = ({ isOpen, onClose, onAdd }) => {
     setErrors({});
     try {
       const formattedUrl = formatUrl(url.trim());
-      const res = await fetch('/api/extract_links', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: formattedUrl }),
-      });
-      const data = await res.json();
+      const data = await extractLinks(formattedUrl);
       if (data.links) {
         setPages(data.links);
         setStep(2);

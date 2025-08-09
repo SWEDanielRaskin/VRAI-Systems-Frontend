@@ -629,4 +629,46 @@ export const saveServices = async (services) => {
   }
 };
 
+// ==================== MESSAGE CUSTOMIZER API ====================
+
+// Test send SMS
+export const testSendSMS = async (toNumber, message) => {
+  try {
+    const response = await api.post('/api/test-send-sms', {
+      to_number: toNumber,
+      message: message,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('API Error - testSendSMS:', error);
+    throw error;
+  }
+};
+
+// Restore default message templates
+export const restoreDefaultTemplates = async () => {
+  try {
+    const response = await api.post('/api/message-templates/restore-defaults');
+    return response.data;
+  } catch (error) {
+    console.error('API Error - restoreDefaultTemplates:', error);
+    throw error;
+  }
+};
+
+// ==================== KNOWLEDGE BASE LINKS API ====================
+
+// Extract links from URL
+export const extractLinks = async (url) => {
+  try {
+    const response = await api.post('/api/extract_links', {
+      url: url,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('API Error - extractLinks:', error);
+    throw error;
+  }
+};
+
 export default api;

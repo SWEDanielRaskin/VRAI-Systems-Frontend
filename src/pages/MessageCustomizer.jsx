@@ -1,7 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ArrowLeft, Plus, RotateCcw } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { getMessageTemplates, updateMessageTemplate } from '../services/api';
+import { 
+  getMessageTemplates, 
+  updateMessageTemplate, 
+  testSendSMS, 
+  restoreDefaultTemplates 
+} from '../services/api';
 
 const MessageCustomizer = () => {
   const navigate = useNavigate();
@@ -510,22 +515,12 @@ const MessageCustomizer = () => {
     try {
       const formattedMessage = formatTestMessage(box.messageContent);
       
-      const response = await fetch('/api/test-send-sms', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          to_number: formattedPhone,
-          message: formattedMessage
-        })
-      });
-
-      if (response.ok) {
+      const response = await testSendSMS(formattedPhone, formattedMessage);
+      
+      if (response.success) {
         setTestMessages(prev => ({ ...prev, [boxId]: { type: 'success', message: 'Test message sent successfully!' } }));
       } else {
-        const error = await response.json();
-        setTestMessages(prev => ({ ...prev, [boxId]: { type: 'error', message: `Failed to send test message: ${error.error || 'Unknown error'}` } }));
+        setTestMessages(prev => ({ ...prev, [boxId]: { type: 'error', message: `Failed to send test message: ${response.error || 'Unknown error'}` } }));
       }
     } catch (error) {
       console.error('Error sending test message:', error);
@@ -539,14 +534,9 @@ const MessageCustomizer = () => {
   const handleRestoreDefaults = async () => {
     setIsRestoring(true);
     try {
-      const response = await fetch('/api/message-templates/restore-defaults', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
+      const response = await restoreDefaultTemplates();
 
-      if (response.ok) {
+      if (response.success) {
         // Reload templates from backend
         const templates = await getMessageTemplates();
         
@@ -588,8 +578,7 @@ const MessageCustomizer = () => {
         setRestoreMessage('Templates restored to defaults successfully!');
         setTimeout(() => setRestoreMessage(''), 3000); // Clear after 3 seconds
       } else {
-        const error = await response.json();
-        setRestoreMessage(`Failed to restore defaults: ${error.error || 'Unknown error'}`);
+        setRestoreMessage(`Failed to restore defaults: ${response.error || 'Unknown error'}`);
         setTimeout(() => setRestoreMessage(''), 5000); // Clear after 5 seconds
       }
     } catch (error) {
