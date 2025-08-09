@@ -269,7 +269,7 @@ export default function ServicesManager() {
           </ol>
         </div>
         <button
-          className="btn-secondary flex items-center space-x-2 mt-3 md:mt-0"
+          className="btn-secondary flex items-center space-x-2 mt-3 md:mt-0 text-sm px-3 py-2 w-full sm:w-auto"
           onClick={() => window.open(TEMPLATE_URL, '_blank')}
         >
           <ExternalLink className="h-4 w-4" />
@@ -278,7 +278,7 @@ export default function ServicesManager() {
       </div>
       {/* Upload Controls */}
       {step === 1 && (
-        <div className="flex items-center space-x-4 mb-8">
+        <div className="flex flex-col space-y-4 md:flex-row md:items-center md:space-y-0 md:space-x-4 mb-8">
           <input
             type="file"
             accept=".csv,.xlsx"
@@ -287,17 +287,17 @@ export default function ServicesManager() {
             onChange={handleFileChange}
           />
           <button
-            className="btn-secondary flex items-center space-x-2"
+            className="btn-secondary flex items-center space-x-2 text-sm px-3 py-2 w-full sm:w-auto"
             onClick={() => fileInputRef.current && fileInputRef.current.click()}
           >
             <Upload className="h-4 w-4" />
             <span>Choose File</span>
           </button>
-          <span className="text-gray-700 text-sm min-w-[120px]">
+          <span className="text-gray-700 text-xs md:text-sm min-w-0 flex-1 md:min-w-[120px] md:flex-none truncate">
             {file ? file.name : 'No file chosen'}
           </span>
           <button
-            className="btn-primary flex items-center space-x-2"
+            className="btn-primary flex items-center space-x-2 text-sm px-3 py-2 w-full sm:w-auto"
             onClick={handleUpload}
             disabled={loading}
           >
@@ -403,13 +403,16 @@ export default function ServicesManager() {
         <div className="text-green-600 mt-4">{success}</div>
       )}
       {/* View/Edit Services Button */}
-      <button className="btn-primary mb-8" onClick={() => setShowModal(true)}>
+      <button 
+        className="btn-primary mb-6 md:mb-8 text-sm px-3 py-2 w-full sm:w-auto" 
+        onClick={() => setShowModal(true)}
+      >
         {`View/Edit Added Services (${services.length})`}
       </button>
       {/* Modal for Services Table */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-5xl relative overflow-x-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 p-4">
+          <div className="bg-white rounded-lg shadow-lg p-4 md:p-6 w-full max-w-5xl relative overflow-x-auto max-h-full">
             <button
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
               onClick={() => setShowModal(false)}
