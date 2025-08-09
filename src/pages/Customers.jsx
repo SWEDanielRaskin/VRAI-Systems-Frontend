@@ -273,9 +273,9 @@ const CustomerList = ({
   handleViewCustomer,
   showDeleteConfirmation
 }) => (
-  <div className="space-y-6">
-    <div className="flex items-center justify-between">
-      <div className="flex items-center space-x-4">
+    <div className="space-y-4 md:space-y-6">
+    <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
+      <div className="flex items-center space-x-3 md:space-x-4">
         <button
           onClick={() => navigate('/')}
           className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
@@ -283,23 +283,23 @@ const CustomerList = ({
           <ArrowLeft className="h-5 w-5 text-gray-600" />
         </button>
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Customer Database</h1>
-          <p className="text-gray-600 mt-1">
-                            {PAGE_TITLES.customers}
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Customer Database</h1>
+          <p className="text-sm md:text-base text-gray-600 mt-1">
+                        {PAGE_TITLES.customers}
           </p>
         </div>
       </div>
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-2 self-start md:self-auto">
         <button
           onClick={fetchCustomers}
-          className="btn-secondary flex items-center space-x-1"
+          className="btn-secondary flex items-center space-x-1 text-sm px-3 py-2"
         >
           <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
-          <span>Refresh</span>
+          <span className="hidden sm:inline">Refresh</span>
         </button>
         <button
           onClick={() => setShowAddModal(true)}
-          className="btn-primary flex items-center space-x-1"
+          className="btn-primary flex items-center space-x-1 text-sm px-3 py-2"
         >
           <Plus className="h-4 w-4" />
           <span>Add Customer</span>
@@ -308,24 +308,23 @@ const CustomerList = ({
     </div>
 
     <div className="card">
-      <div className="flex items-center space-x-4">
-        <div className="relative" style={{ width: '600px' }}>
+      <div className="flex flex-col space-y-4 lg:flex-row lg:items-center lg:space-y-0 lg:space-x-4">
+        <div className="relative flex-1 max-w-full lg:max-w-xl">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
           <input
             type="text"
             placeholder="Search customers by name, phone, or email..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="input pl-10 w-full"
+            className="input pl-10 w-full text-sm"
           />
         </div>
-        <div className="flex-1"></div>
-        <div className="flex items-center space-x-2">
+        <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-2 flex-shrink-0">
           <div className="border border-gray-300 rounded-lg bg-white">
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="input border-0 focus:ring-0"
+              className="input border-0 focus:ring-0 text-sm py-2"
             >
               <option value="name">Sort by Name</option>
               <option value="total_appointments">Sort by # Appointments</option>
@@ -337,7 +336,7 @@ const CustomerList = ({
             <select
               value={sortOrder}
               onChange={(e) => setSortOrder(e.target.value)}
-              className="input border-0 focus:ring-0"
+              className="input border-0 focus:ring-0 text-sm py-2"
             >
               <option value="ASC">Ascending</option>
               <option value="DESC">Descending</option>
@@ -345,7 +344,7 @@ const CustomerList = ({
           </div>
           <button
             onClick={fetchCustomers}
-            className="btn-secondary flex items-center space-x-1"
+            className="btn-secondary flex items-center space-x-1 text-sm px-3 py-2 w-full sm:w-auto"
           >
             <Filter className="h-4 w-4" />
             <span>Apply</span>
@@ -385,52 +384,59 @@ const CustomerList = ({
             <div
               key={customer.phone_number}
               onClick={() => handleViewCustomer(customer.phone_number)}
-              className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+              className="flex flex-col sm:flex-row sm:items-center p-3 md:p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors space-y-3 sm:space-y-0"
             >
-              <div className="flex items-center space-x-4 flex-1">
-                <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center">
+              <div className="flex items-center space-x-3 md:space-x-4 flex-1 min-w-0">
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
                   {customer.profile_picture_path ? (
                     <img
                       src={`${API_BASE_URL}/uploads/${customer.profile_picture_path}`}
                       alt={customer.name}
-                      className="w-12 h-12 rounded-full object-cover"
+                      className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover"
                     />
                   ) : (
-                    <User className="h-6 w-6 text-primary-600" />
+                    <User className="h-5 w-5 md:h-6 md:w-6 text-primary-600" />
                   )}
                 </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900">
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-semibold text-gray-900 text-sm md:text-base truncate">
                     {customer.name || 'Unnamed Customer'}
                   </h3>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-xs md:text-sm text-gray-600">
                     {formatPhoneNumber(customer.phone_number)}
                   </p>
                   {customer.email && (
-                    <p className="text-sm text-gray-500">{customer.email}</p>
+                    <p className="text-xs md:text-sm text-gray-500 truncate">{customer.email}</p>
                   )}
                 </div>
               </div>
-              <div className="text-right flex-shrink-0 mr-4">
-                <div className="text-sm font-medium text-gray-900">
+              
+              <div className="flex justify-between items-center sm:block sm:text-right flex-shrink-0 sm:mr-4">
+                <div className="text-xs md:text-sm font-medium text-gray-900">
                   {customer.total_appointments || 0} appointments
                 </div>
-                <div className="text-sm text-gray-500">
-                  Last visit: {formatDate(customer.last_appointment_date)}
+                <div className="text-xs md:text-sm text-gray-500 sm:mt-1">
+                  Last: {formatDate(customer.last_appointment_date)}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-xs md:text-sm text-gray-500 sm:mt-1 hidden sm:block">
                   Customer since: {formatDate(customer.customer_since)}
                 </div>
               </div>
-              <div className="flex items-center space-x-2 flex-shrink-0">
-                <button
-                  onClick={(e) => showDeleteConfirmation(e, customer)}
-                  className="p-1 text-red-500 hover:text-red-700 hover:bg-red-50 rounded transition-colors"
-                  title="Delete customer"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </button>
-                <ChevronRight className="h-5 w-5 text-gray-400" />
+              
+              <div className="flex items-center justify-between sm:justify-start sm:space-x-2 flex-shrink-0">
+                <div className="sm:hidden text-xs text-gray-500">
+                  Since: {formatDate(customer.customer_since)}
+                </div>
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={(e) => showDeleteConfirmation(e, customer)}
+                    className="p-1 text-red-500 hover:text-red-700 hover:bg-red-50 rounded transition-colors"
+                    title="Delete customer"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                  <ChevronRight className="h-4 w-4 md:h-5 md:w-5 text-gray-400" />
+                </div>
               </div>
             </div>
           ))}
@@ -794,30 +800,28 @@ const Customers = () => {
     if (!selectedCustomer) return null;
 
     return (
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <button
-              onClick={handleBackToList}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              <ArrowLeft className="h-5 w-5 text-gray-600" />
-            </button>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                {selectedCustomer.name || 'Unnamed Customer'}
-              </h1>
-              <p className="text-gray-600 mt-1">
-                Customer since {formatDate(selectedCustomer.customer_since)}
-              </p>
-            </div>
+      <div className="space-y-4 md:space-y-6">
+        <div className="flex items-center space-x-3 md:space-x-4">
+          <button
+            onClick={handleBackToList}
+            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          >
+            <ArrowLeft className="h-5 w-5 text-gray-600" />
+          </button>
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+              {selectedCustomer.name || 'Unnamed Customer'}
+            </h1>
+            <p className="text-sm md:text-base text-gray-600 mt-1">
+              Customer since {formatDate(selectedCustomer.customer_since)}
+            </p>
           </div>
         </div>
 
         <div className="card">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Profile</h2>
-          <div className="flex items-start space-x-6">
-            <div className="relative">
+          <h2 className="text-base md:text-lg font-semibold text-gray-900 mb-4">Profile</h2>
+          <div className="flex flex-col sm:flex-row sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
+            <div className="relative flex-shrink-0 self-center sm:self-start">
               <input
                 type="file"
                 accept="image/*"
@@ -827,30 +831,30 @@ const Customers = () => {
               />
               <label
                 htmlFor="profile-picture-upload"
-                className="block w-24 h-24 bg-primary-100 rounded-full cursor-pointer group relative overflow-hidden"
+                className="block w-20 h-20 md:w-24 md:h-24 bg-primary-100 rounded-full cursor-pointer group relative overflow-hidden"
               >
                 {selectedCustomer.profile_picture_path ? (
                   <img
                     src={`${API_BASE_URL}/uploads/${selectedCustomer.profile_picture_path}`}
                     alt={selectedCustomer.name}
-                    className="w-24 h-24 rounded-full object-cover"
+                    className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover"
                   />
                 ) : (
-                  <div className="w-24 h-24 rounded-full flex items-center justify-center">
-                    <User className="h-12 w-12 text-primary-600" />
+                  <div className="w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center">
+                    <User className="h-10 w-10 md:h-12 md:w-12 text-primary-600" />
                   </div>
                 )}
                 
                 <div className="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   {uploadingPicture ? (
-                    <RefreshCw className="h-6 w-6 text-white animate-spin" />
+                    <RefreshCw className="h-5 w-5 md:h-6 md:w-6 text-white animate-spin" />
                   ) : (
-                    <Camera className="h-6 w-6 text-white" />
+                    <Camera className="h-5 w-5 md:h-6 md:w-6 text-white" />
                   )}
                 </div>
               </label>
             </div>
-            <div className="flex-1 grid grid-cols-2 gap-2">
+            <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
               <EditableField 
                 field="name"
                 value={selectedCustomer.name}
@@ -902,11 +906,11 @@ const Customers = () => {
             />
           </div>
           
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Appointment History</h2>
+          <h2 className="text-base md:text-lg font-semibold text-gray-900 mb-4">Appointment History</h2>
           
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
             <div>
-              <h3 className="text-md font-medium text-gray-900 mb-3">
+              <h3 className="text-sm md:text-base font-medium text-gray-900 mb-3">
                 Past Appointments ({selectedCustomer.past_appointments?.length || 0})
               </h3>
               {selectedCustomer.past_appointments?.length > 0 ? (
@@ -992,7 +996,7 @@ const Customers = () => {
             </div>
 
             <div>
-              <h3 className="text-md font-medium text-gray-900 mb-3">
+              <h3 className="text-sm md:text-base font-medium text-gray-900 mb-3">
                 Upcoming Appointments ({selectedCustomer.upcoming_appointments?.length || 0})
               </h3>
               {selectedCustomer.upcoming_appointments?.length > 0 ? (
@@ -1079,7 +1083,7 @@ const Customers = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="p-6">
+      <div className="p-4 md:p-6">
         {view === 'list' ? (
           <CustomerList
             navigate={navigate}
