@@ -655,9 +655,9 @@ const MessageCustomizer = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-6 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+      <div className="bg-white border-b border-gray-200 px-4 md:px-6 py-3 md:py-4">
+        <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
+          <div className="flex items-center space-x-3 md:space-x-4">
             <button
               onClick={() => navigate('/settings')}
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
@@ -665,15 +665,15 @@ const MessageCustomizer = () => {
               <ArrowLeft className="h-5 w-5 text-gray-600" />
             </button>
             <div className="flex items-center space-x-2">
-              <h1 className="text-2xl font-bold text-gray-900">Message Customizer</h1>
+              <h1 className="text-xl md:text-2xl font-bold text-gray-900">Message Customizer</h1>
               <span className="px-2 py-1 text-xs font-bold text-white rounded-full" style={{ backgroundColor: currentThemeColor }}>
                 NEW
               </span>
             </div>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 md:space-x-4">
             {restoreMessage && (
-              <div className={`text-sm px-3 py-1 rounded ${
+              <div className={`text-xs md:text-sm px-3 py-1 rounded ${
                 restoreMessage.includes('successfully') 
                   ? 'bg-green-100 text-green-700' 
                   : 'bg-red-100 text-red-700'
@@ -684,17 +684,18 @@ const MessageCustomizer = () => {
             <button
               onClick={() => setShowRestoreConfirm(true)}
               disabled={isRestoring}
-              className="flex items-center space-x-2 px-4 py-2 bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white rounded-lg transition-colors"
+              className="flex items-center space-x-1 md:space-x-2 px-3 md:px-4 py-2 bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white rounded-lg transition-colors text-sm"
             >
               <RotateCcw className="h-4 w-4" />
-              <span>{isRestoring ? 'Restoring...' : 'Restore Defaults'}</span>
+              <span className="hidden sm:inline">{isRestoring ? 'Restoring...' : 'Restore Defaults'}</span>
+              <span className="sm:hidden">Reset</span>
             </button>
           </div>
         </div>
       </div>
 
-      {/* Canvas Container */}
-      <div className="relative w-full h-[calc(100vh-80px)] overflow-hidden bg-gray-100">
+      {/* Desktop Canvas View */}
+      <div className="hidden md:block relative w-full h-[calc(100vh-88px)] overflow-hidden bg-gray-100">
         {/* Canvas */}
         <div
           ref={canvasRef}
@@ -955,28 +956,209 @@ const MessageCustomizer = () => {
         </div>
       </div>
 
+      {/* Mobile List View */}
+      <div className="md:hidden bg-gray-50 min-h-[calc(100vh-80px)]">
+        <div className="p-4 space-y-4">
+          {messageBoxes.map((box) => (
+            <div key={box.id} className="bg-white rounded-lg border border-gray-200 shadow-sm">
+              {/* Card Header */}
+              <div className="px-4 py-3 border-b border-gray-100">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-sm font-semibold text-gray-900">{box.title}</h3>
+                    {box.description && (
+                      <p className="text-xs text-gray-500 mt-1">{box.description}</p>
+                    )}
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-xs text-gray-500">Enable</span>
+                    <input
+                      type="checkbox"
+                      checked={box.isEnabled}
+                      onChange={(e) => handleMessageChange(box.id, 'isEnabled', e.target.checked)}
+                      className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Card Content */}
+              <div className="p-4 space-y-4">
+                {/* Conditional Fields */}
+                {(box.hoursInAdvance !== undefined || box.hoursBeforeAppointment !== undefined || box.hoursAfterAppointment !== undefined) && (
+                  <div className="space-y-3">
+                    {box.hoursInAdvance !== undefined && (
+                      <div>
+                        <label className="block text-xs text-gray-600 mb-1">
+                          Send if booked {box.hoursInAdvance || 0} or more hours in advance
+                        </label>
+                        <input
+                          type="number"
+                          value={box.hoursInAdvance || ''}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            const parsedValue = value === '' ? 0 : parseInt(value) || 0;
+                            handleMessageChange(box.id, 'hoursInAdvance', parsedValue);
+                          }}
+                          className="w-full text-sm border border-gray-300 rounded px-3 py-2"
+                          min="1"
+                          max="168"
+                        />
+                      </div>
+                    )}
+                    {box.hoursBeforeAppointment !== undefined && (
+                      <div>
+                        <label className="block text-xs text-gray-600 mb-1">
+                          Send {box.hoursBeforeAppointment || 0} hours before appointment
+                        </label>
+                        <input
+                          type="number"
+                          value={box.hoursBeforeAppointment || ''}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            const parsedValue = value === '' ? 0 : parseInt(value) || 0;
+                            handleMessageChange(box.id, 'hoursBeforeAppointment', parsedValue);
+                          }}
+                          className="w-full text-sm border border-gray-300 rounded px-3 py-2"
+                          min="1"
+                          max="72"
+                        />
+                      </div>
+                    )}
+                    {box.hoursAfterAppointment !== undefined && (
+                      <div>
+                        <label className="block text-xs text-gray-600 mb-1">
+                          Send {box.hoursAfterAppointment || 0} hours after appointment
+                        </label>
+                        <input
+                          type="number"
+                          value={box.hoursAfterAppointment || ''}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            const parsedValue = value === '' ? 0 : parseInt(value) || 0;
+                            handleMessageChange(box.id, 'hoursAfterAppointment', parsedValue);
+                          }}
+                          className="w-full text-sm border border-gray-300 rounded px-3 py-2"
+                          min="1"
+                          max="24"
+                        />
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Message Content */}
+                <div>
+                  <label className="block text-xs text-gray-600 mb-1">
+                    Message Content ({box.messageContent.length}/{box.maxChars})
+                  </label>
+                  <textarea
+                    ref={(el) => textareaRefs.current[box.id] = el}
+                    value={box.messageContent}
+                    onChange={(e) => handleMessageContentChange(box.id, e.target.value)}
+                    onKeyUp={(e) => {
+                      const textarea = textareaRefs.current[box.id];
+                      if (textarea) {
+                        setMessageBoxes(prev => prev.map(b => 
+                          b.id === box.id ? { ...b, cursorPosition: textarea.selectionStart } : b
+                        ));
+                      }
+                    }}
+                    className="w-full h-24 text-sm border border-gray-300 rounded px-3 py-2 resize-none"
+                    maxLength={box.maxChars}
+                    placeholder="Enter your message here..."
+                  />
+                </div>
+
+                {/* Available Tags */}
+                <div>
+                  <label className="block text-xs text-gray-600 mb-2">
+                    Available Tags (tap to insert):
+                  </label>
+                  <div className="flex flex-wrap gap-2">
+                    {['{name}', '{service}', '{time}', '{date}', '{specialist}', '{price}', '{duration}'].map((tag) => (
+                      <button
+                        key={tag}
+                        onClick={() => insertTag(box.id, tag)}
+                        className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded border transition-colors"
+                      >
+                        {tag}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Test Send Section */}
+                <div className="bg-gray-50 rounded-lg p-3">
+                  <div className="text-xs font-medium text-gray-700 mb-2">Test Send</div>
+                  <div className="flex space-x-2">
+                    <input
+                      type="tel"
+                      placeholder="Phone number"
+                      value={testPhoneNumbers[box.id] || ''}
+                      onChange={(e) => setTestPhoneNumbers(prev => ({ ...prev, [box.id]: e.target.value }))}
+                      className="flex-1 text-sm border border-gray-300 rounded px-3 py-2"
+                    />
+                    <button
+                      onClick={() => handleTestSend(box.id)}
+                      disabled={testSending[box.id]}
+                      className="text-sm bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-4 py-2 rounded transition-colors"
+                    >
+                      {testSending[box.id] ? 'Sending...' : 'Send'}
+                    </button>
+                  </div>
+                  {testMessages[box.id] && (
+                    <div className={`mt-2 text-xs ${testMessages[box.id].type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+                      {testMessages[box.id].message}
+                    </div>
+                  )}
+                </div>
+
+                {/* Action Buttons */}
+                {box.hasChanges && (
+                  <div className="flex space-x-2 pt-2">
+                    <button
+                      onClick={() => handleCancelChanges(box.id)}
+                      className="flex-1 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded border transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={() => handleSaveChanges(box.id)}
+                      className="flex-1 text-sm bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded transition-colors"
+                    >
+                      Save Changes
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Restore Defaults Confirmation Modal */}
       {showRestoreConfirm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg p-4 md:p-6 max-w-md w-full">
+            <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">
               Restore Default Templates
             </h3>
-            <p className="text-gray-600 mb-6">
+            <p className="text-sm md:text-base text-gray-600 mb-4 md:mb-6">
               This will reset all message templates to their original default values. 
               All customizations will be lost. Are you sure you want to continue?
             </p>
-            <div className="flex space-x-3">
+            <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
               <button
                 onClick={() => setShowRestoreConfirm(false)}
-                className="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg transition-colors"
+                className="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg transition-colors text-sm md:text-base"
               >
                 Cancel
               </button>
               <button
                 onClick={handleRestoreDefaults}
                 disabled={isRestoring}
-                className="flex-1 px-4 py-2 bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white rounded-lg transition-colors"
+                className="flex-1 px-4 py-2 bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white rounded-lg transition-colors text-sm md:text-base"
               >
                 {isRestoring ? 'Restoring...' : 'Restore Defaults'}
               </button>
