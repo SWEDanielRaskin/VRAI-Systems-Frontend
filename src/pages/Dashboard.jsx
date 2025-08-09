@@ -272,16 +272,16 @@ const Dashboard = () => {
   const modeInfo = getCurrentModeInfo();
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 md:space-y-8">
       {/* Header with Logo and Controls */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
         {/* Logo */}
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2 md:space-x-3">
           {/* Vrai Systems Logo */}
           <img 
             src="/vrai-logo-black.png" 
             alt="Vrai Systems" 
-            className="h-16 w-auto"
+            className="h-10 w-auto md:h-16"
             onError={(e) => {
               // Hide the image on error - fallback will show automatically
               e.target.style.display = 'none';
@@ -290,27 +290,27 @@ const Dashboard = () => {
           />
           {/* Fallback: VRAI SYSTEMS text logo */}
           <div className="flex flex-col items-center" style={{ display: 'none' }}>
-            <span className="text-5xl font-bold text-black leading-none">VRAI</span>
+            <span className="text-3xl md:text-5xl font-bold text-black leading-none">VRAI</span>
             <span className="text-xs font-light text-black leading-none tracking-widest">S     Y    S     T     E     M     S</span>
           </div>
           {/* Collaboration "x" */}
-          <span className="text-gray-400 text-lg font-light">×</span>
+          <span className="text-gray-400 text-sm md:text-lg font-light">×</span>
           {/* Med Spa Logo/Text */}
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-1 md:space-x-2">
             {/* Med Spa Logo */}
             {medSpaLogoLoaded ? (
               <img 
                 src="/medspa-logo.png" 
                 alt={BUSINESS_NAME}
-                className="h-16 w-auto"
+                className="h-10 w-auto md:h-16"
               />
             ) : (
               /* Fallback: Sparkles + Text (shows when logo fails to load) */
-              <div className="flex items-center space-x-2">
-                <Sparkles className="h-8 w-8 text-primary-600" />
+              <div className="flex items-center space-x-1 md:space-x-2">
+                <Sparkles className="h-6 w-6 md:h-8 md:w-8 text-primary-600" />
                 <div>
-                  <h1 className="text-2xl font-bold text-gray-900">{BUSINESS_NAME}</h1>
-                  <p className="text-sm text-gray-500">Med Spa Dashboard</p>
+                  <h1 className="text-lg md:text-2xl font-bold text-gray-900">{BUSINESS_NAME}</h1>
+                  <p className="text-xs md:text-sm text-gray-500">Med Spa Dashboard</p>
                 </div>
               </div>
             )}
@@ -326,38 +326,38 @@ const Dashboard = () => {
         </div>
 
         {/* Controls */}
-        <div className="flex items-center space-x-4">
+        <div className="flex flex-wrap items-center gap-2 md:space-x-4">
           {/* Welcome message */}
-          <span className="text-sm text-gray-600">
+          <span className="text-xs md:text-sm text-gray-600 hidden sm:block">
             Welcome, {user?.username}
           </span>
           <button
             onClick={() => navigate('/settings')}
-            className="btn-secondary flex items-center space-x-2"
+            className="btn-secondary flex items-center space-x-1 md:space-x-2 text-sm px-3 py-2"
           >
             <Settings className="h-4 w-4" />
-            <span>Settings</span>
+            <span className="hidden sm:inline">Settings</span>
           </button>
           <button
             onClick={handleRefresh}
             disabled={loading}
-            className="btn-secondary flex items-center space-x-2"
+            className="btn-secondary flex items-center space-x-1 md:space-x-2 text-sm px-3 py-2"
           >
             <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
-            <span>Refresh</span>
+            <span className="hidden sm:inline">Refresh</span>
           </button>
           <button
             onClick={handleLogout}
-            className="btn-secondary flex items-center space-x-2 text-gray-600 hover:text-gray-900"
+            className="btn-secondary flex items-center space-x-1 md:space-x-2 text-gray-600 hover:text-gray-900 text-sm px-3 py-2"
           >
             <LogOut className="h-4 w-4" />
-            <span>Logout</span>
+            <span className="hidden sm:inline">Logout</span>
           </button>
           {/* FIXED: Enhanced auto-refresh indicator with 3-minute timing */}
-          <div className="text-xs text-gray-500 flex items-center space-x-2 bg-gray-50 px-3 py-2 rounded-lg">
+          <div className="text-xs text-gray-500 flex items-center space-x-1 md:space-x-2 bg-gray-50 px-2 md:px-3 py-2 rounded-lg">
             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
             <div className="flex flex-col">
-              <span className="font-medium">Auto-Updates</span>
+              <span className="font-medium hidden md:block">Auto-Updates</span>
               <span className="text-gray-400">Last updated: just now</span>
             </div>
           </div>
@@ -366,15 +366,15 @@ const Dashboard = () => {
 
       {/* System Status - Simplified Inline Layout */}
       <div className="card">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0 mb-6">
           <div className="flex items-center space-x-3">
-            <Clock className="h-6 w-6 text-primary-600" />
-            <h2 className="text-lg font-semibold text-gray-900">
+            <Clock className="h-5 w-5 md:h-6 md:w-6 text-primary-600" />
+            <h2 className="text-base md:text-lg font-semibold text-gray-900">
               System Status
             </h2>
           </div>
           <div
-            className={`status-badge ${
+            className={`status-badge text-xs ${
               systemHealth?.business_hours ? 'status-active' : 'status-warning'
             }`}
           >
@@ -384,14 +384,14 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Inline Layout: Business Phone | Current Mode | Lock + Toggle */}
-        <div className="flex items-center justify-between space-x-8">
+        {/* Mobile: Stacked Layout | Desktop: Inline Layout */}
+        <div className="flex flex-col space-y-6 md:flex-row md:items-center md:justify-between md:space-y-0 md:space-x-8">
           {/* Business Phone */}
           <div className="flex-1">
             <h3 className="text-sm font-medium text-gray-700 mb-2">
               Business Phone
             </h3>
-            <p className="text-lg font-semibold text-gray-900">
+            <p className="text-base md:text-lg font-semibold text-gray-900">
               +1 (877) 390-0002
             </p>
           </div>
@@ -410,18 +410,18 @@ const Dashboard = () => {
             </div>
             <div className="flex items-center space-x-2">
               <modeInfo.icon
-                className={`h-5 w-5 ${
+                className={`h-4 w-4 md:h-5 md:w-5 ${
                   modeInfo.color === 'blue' ? 'text-blue-600' : 'text-green-600'
                 }`}
               />
-              <span className="text-lg font-semibold text-gray-900">
+              <span className="text-base md:text-lg font-semibold text-gray-900">
                 {modeInfo.title}
               </span>
             </div>
           </div>
 
           {/* Lock + Apple Toggle */}
-          <div className="flex-1 flex justify-end items-center space-x-3">
+          <div className="flex-1 flex justify-start md:justify-end items-center space-x-3">
             <AppleToggle
               value={overrideMode}
               onChange={handleOverrideModeChange}
@@ -434,30 +434,30 @@ const Dashboard = () => {
       </div>
 
       {/* Today's Activity - Three Item Row */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
         {/* Voice Calls Today */}
         <div
           onClick={() => navigate('/voice-calls')}
           className="card hover:shadow-md transition-shadow cursor-pointer group"
         >
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="bg-green-100 rounded-full p-3">
-                <Phone className="h-6 w-6 text-green-600" />
+            <div className="flex items-center space-x-3 md:space-x-4">
+              <div className="bg-green-100 rounded-full p-2 md:p-3">
+                <Phone className="h-5 w-5 md:h-6 md:w-6 text-green-600" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-gray-900">
+                <h3 className="text-base md:text-lg font-semibold text-gray-900">
                   Voice Calls Today
                 </h3>
-                <p className="text-2xl font-bold text-gray-900 mt-1">
+                <p className="text-xl md:text-2xl font-bold text-gray-900 mt-1">
                   {callsData.count}
                 </p>
-                <p className="text-sm text-gray-600">
+                <p className="text-xs md:text-sm text-gray-600">
                   AI handled calls and missed calls
                 </p>
               </div>
             </div>
-            <ArrowRight className="h-5 w-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
+            <ArrowRight className="h-4 w-4 md:h-5 md:w-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
           </div>
         </div>
 
@@ -467,23 +467,23 @@ const Dashboard = () => {
           className="card hover:shadow-md transition-shadow cursor-pointer group"
         >
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="bg-blue-100 rounded-full p-3">
-                <MessageSquare className="h-6 w-6 text-blue-600" />
+            <div className="flex items-center space-x-3 md:space-x-4">
+              <div className="bg-blue-100 rounded-full p-2 md:p-3">
+                <MessageSquare className="h-5 w-5 md:h-6 md:w-6 text-blue-600" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-gray-900">
+                <h3 className="text-base md:text-lg font-semibold text-gray-900">
                   Messages Today
                 </h3>
-                <p className="text-2xl font-bold text-gray-900 mt-1">
+                <p className="text-xl md:text-2xl font-bold text-gray-900 mt-1">
                   {messagesData.count}
                 </p>
-                <p className="text-sm text-gray-600">
+                <p className="text-xs md:text-sm text-gray-600">
                   SMS conversations with customers
                 </p>
               </div>
             </div>
-            <ArrowRight className="h-5 w-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
+            <ArrowRight className="h-4 w-4 md:h-5 md:w-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
           </div>
         </div>
 
@@ -493,23 +493,23 @@ const Dashboard = () => {
           className="card hover:shadow-md transition-shadow cursor-pointer group"
         >
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="bg-purple-100 rounded-full p-3">
-                <Calendar className="h-6 w-6 text-purple-600" />
+            <div className="flex items-center space-x-3 md:space-x-4">
+              <div className="bg-purple-100 rounded-full p-2 md:p-3">
+                <Calendar className="h-5 w-5 md:h-6 md:w-6 text-purple-600" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-gray-900">
+                <h3 className="text-base md:text-lg font-semibold text-gray-900">
                   Appointments Today
                 </h3>
-                <p className="text-2xl font-bold text-gray-900 mt-1">
+                <p className="text-xl md:text-2xl font-bold text-gray-900 mt-1">
                   {appointmentsData.count}
                 </p>
-                <p className="text-sm text-gray-600">
+                <p className="text-xs md:text-sm text-gray-600">
                   New appointments created today
                 </p>
               </div>
             </div>
-            <ArrowRight className="h-5 w-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
+            <ArrowRight className="h-4 w-4 md:h-5 md:w-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
           </div>
         </div>
 
@@ -519,32 +519,32 @@ const Dashboard = () => {
       {/* Customer Database */}
       <div
         onClick={() => navigate('/customers')}
-        className="card hover:shadow-md transition-shadow cursor-pointer group h-24"
+        className="card hover:shadow-md transition-shadow cursor-pointer group"
       >
-        <div className="flex items-center justify-between h-full">
-          <div className="flex items-center space-x-4">
-            <div className="bg-orange-100 rounded-full p-3">
-              <Users className="h-6 w-6 text-orange-600" />
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3 md:space-x-4">
+            <div className="bg-orange-100 rounded-full p-2 md:p-3">
+              <Users className="h-5 w-5 md:h-6 md:w-6 text-orange-600" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900">
+              <h3 className="text-base md:text-lg font-semibold text-gray-900">
                 Customer Database
               </h3>
-              <p className="text-sm text-gray-600">
+              <p className="text-xs md:text-sm text-gray-600">
                 Manage customer profiles & history
               </p>
             </div>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3 md:space-x-4">
             <div className="text-right">
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-xl md:text-2xl font-bold text-gray-900">
                 {customersData.count}
               </p>
-              <p className="text-sm text-gray-600">
+              <p className="text-xs md:text-sm text-gray-600">
                 customers
               </p>
             </div>
-            <ArrowRight className="h-5 w-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
+            <ArrowRight className="h-4 w-4 md:h-5 md:w-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
           </div>
         </div>
       </div>

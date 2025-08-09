@@ -12,7 +12,7 @@ const Layout = ({ children }) => {
     <div className="flex h-screen bg-gray-50">
       {/* Main content - now full width, sidebar removed */}
       <div className={`flex-1${isScrollLocked ? '' : ' overflow-auto'}`}>
-        <div className="p-6">{children}</div>
+        <div className="p-4 md:p-6">{children}</div>
       </div>
     </div>
   );
