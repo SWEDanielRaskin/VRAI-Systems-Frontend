@@ -741,4 +741,15 @@ export const getSelectedCalendar = async () => {
   }
 };
 
+// Get Google Calendar embed URL
+export const getCalendarEmbedUrl = async () => {
+  try {
+    const response = await api.get('/api/calendar/embed-url');
+    return response.data;
+  } catch (error) {
+    console.error('API Error - getCalendarEmbedUrl:', error);
+    throw error;
+  }
+};
+
 export default api;

@@ -1,9 +1,35 @@
-import React from 'react'
-import { ArrowLeft, Calendar, Edit } from 'lucide-react'
+import React, { useState, useEffect } from 'react'
+import { ArrowLeft, Calendar, Edit, AlertCircle, Settings } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { getCalendarEmbedUrl } from '../services/api'
 
 const Appointments = () => {
   const navigate = useNavigate()
+  const [calendarData, setCalendarData] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    const fetchCalendarEmbed = async () => {
+      try {
+        setLoading(true)
+        const response = await getCalendarEmbedUrl()
+        
+        if (response.success) {
+          setCalendarData(response)
+        } else {
+          setError(response.message || 'No calendar selected')
+        }
+      } catch (error) {
+        console.error('Failed to fetch calendar embed:', error)
+        setError('Failed to load calendar')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchCalendarEmbed()
+  }, [])
 
   return (
     <div className="space-y-4 md:space-y-6">
@@ -23,7 +49,7 @@ const Appointments = () => {
         </div>
         <div className="flex items-center space-x-3 self-start md:self-auto">
           <a
-            href="https://calendar.google.com/"
+            href={calendarData ? `https://calendar.google.com/calendar/u/0/r?cid=${calendarData.calendar_id}` : "https://calendar.google.com/"}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-primary flex items-center space-x-2 text-sm px-3 py-2"
@@ -40,7 +66,9 @@ const Appointments = () => {
         <div className="bg-gray-50 px-4 md:px-6 py-3 md:py-4 border-b border-gray-200">
           <div className="flex items-center space-x-3">
             <Calendar className="h-4 w-4 md:h-5 md:w-5 text-primary-600" />
-            <h2 className="text-base md:text-lg font-semibold text-gray-900">Omorfia Med Spa Calendar</h2>
+            <h2 className="text-base md:text-lg font-semibold text-gray-900">
+              {calendarData ? calendarData.calendar_name : 'Calendar'}
+            </h2>
           </div>
           <p className="text-xs md:text-sm text-gray-600 mt-1">
             View-only calendar below. To make changes, click "Edit in Google Calendar" above.
@@ -48,16 +76,42 @@ const Appointments = () => {
         </div>
         
         <div className="relative">
-          <iframe 
-            src="https://calendar.google.com/calendar/embed?height=700&wkst=1&ctz=America%2FDetroit&mode=WEEK&showTitle=0&showPrint=0&src=NmM0N2ZhYzEyOTk1MzA5NmFiYmQzMjgxNTQxMjM0YzRiMzE1OGY0NGJlZGI3ZWVlYjdkNmY1MmM2MWRjYTNjN0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23c0ca33"
-            style={{ border: 'solid 1px #777' }}
-            width="1400"
-            height="700"
-            frameBorder="0"
-            scrolling="no"
-            className="w-full h-96 md:h-[700px]"
-            title="Omorfia Med Spa Calendar"
-          />
+          {loading ? (
+            <div className="flex items-center justify-center h-96 md:h-[700px]">
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600 mx-auto mb-4"></div>
+                <p className="text-gray-600">Loading calendar...</p>
+              </div>
+            </div>
+          ) : error ? (
+            <div className="flex items-center justify-center h-96 md:h-[700px]">
+              <div className="text-center max-w-md mx-auto p-6">
+                <AlertCircle className="h-12 w-12 text-amber-500 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">No Calendar Connected</h3>
+                <p className="text-gray-600 mb-4">
+                  Connect your Google Calendar to view appointments here.
+                </p>
+                <button
+                  onClick={() => navigate('/settings')}
+                  className="btn-primary flex items-center space-x-2 mx-auto"
+                >
+                  <Settings className="h-4 w-4" />
+                  <span>Go to Settings</span>
+                </button>
+              </div>
+            </div>
+          ) : calendarData ? (
+            <iframe 
+              src={calendarData.embed_url}
+              style={{ border: 'solid 1px #777' }}
+              width="1400"
+              height="700"
+              frameBorder="0"
+              scrolling="no"
+              className="w-full h-96 md:h-[700px]"
+              title={`${calendarData.calendar_name} Calendar`}
+            />
+          ) : null}
         </div>
       </div>
 
