@@ -333,6 +333,56 @@ const GoogleCalendarSettings = () => {
           </div>
         </div>
       )}
+
+      {/* Test Button */}
+      {oauthStatus.connected && (
+        <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <h3 className="font-medium text-blue-900 mb-2">🧪 Test Calendar Integration</h3>
+          <p className="text-sm text-blue-700 mb-3">
+            Run comprehensive tests to verify all calendar functionality is working correctly.
+          </p>
+          <button
+            onClick={async () => {
+              try {
+                const token = localStorage.getItem('authToken');
+                const response = await fetch('https://vraisystems.up.railway.app/api/test/google-calendar', {
+                  headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const result = await response.json();
+                
+                const summary = result.summary || {};
+                const status = result.overall_status;
+                const emoji = status === 'pass' ? '✅' : status === 'fail' ? '❌' : '⚠️';
+                
+                alert(`${emoji} Test Result: ${status.toUpperCase()}\n\n` +
+                      `Total Tests: ${summary.total_tests || 0}\n` +
+                      `Passed: ${summary.passed || 0}\n` +
+                      `Failed: ${summary.failed || 0}\n` +
+                      `Skipped: ${summary.skipped || 0}\n\n` +
+                      `Check browser console for detailed results.`);
+                
+                console.log('📊 Google Calendar Test Results:', result);
+                
+                if (result.tests) {
+                  console.log('📋 Individual Test Results:');
+                  result.tests.forEach(test => {
+                    const icon = test.status === 'pass' ? '✅' : test.status === 'fail' ? '❌' : '⚠️';
+                    console.log(`${icon} ${test.test}: ${test.message}`);
+                    if (test.details) console.log(`   Details: ${test.details}`);
+                  });
+                }
+                
+              } catch (error) {
+                alert(`❌ Test Error: ${error.message}`);
+                console.error('Test error:', error);
+              }
+            }}
+            className="btn-primary text-sm"
+          >
+            Run Tests
+          </button>
+        </div>
+      )}
     </div>
   );
 };
