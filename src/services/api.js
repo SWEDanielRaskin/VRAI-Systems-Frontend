@@ -671,4 +671,74 @@ export const extractLinks = async (url) => {
   }
 };
 
+// ==================== Google OAuth API ====================
+
+// Initiate Google OAuth flow
+export const initiateGoogleOAuth = async () => {
+  try {
+    const response = await api.get('/api/oauth/google/auth');
+    return response.data;
+  } catch (error) {
+    console.error('API Error - initiateGoogleOAuth:', error);
+    throw error;
+  }
+};
+
+// Check Google OAuth connection status
+export const getGoogleOAuthStatus = async () => {
+  try {
+    const response = await api.get('/api/oauth/google/status');
+    return response.data;
+  } catch (error) {
+    console.error('API Error - getGoogleOAuthStatus:', error);
+    throw error;
+  }
+};
+
+// Disconnect Google OAuth
+export const disconnectGoogleOAuth = async () => {
+  try {
+    const response = await api.post('/api/oauth/google/disconnect');
+    return response.data;
+  } catch (error) {
+    console.error('API Error - disconnectGoogleOAuth:', error);
+    throw error;
+  }
+};
+
+// ==================== Calendar Management API ====================
+
+// List user's Google Calendars
+export const listCalendars = async () => {
+  try {
+    const response = await api.get('/api/calendars/list');
+    return response.data;
+  } catch (error) {
+    console.error('API Error - listCalendars:', error);
+    throw error;
+  }
+};
+
+// Select a calendar for appointments
+export const selectCalendar = async (calendarData) => {
+  try {
+    const response = await api.post('/api/calendars/select', calendarData);
+    return response.data;
+  } catch (error) {
+    console.error('API Error - selectCalendar:', error);
+    throw error;
+  }
+};
+
+// Get currently selected calendar
+export const getSelectedCalendar = async () => {
+  try {
+    const response = await api.get('/api/calendars/selected');
+    return response.data;
+  } catch (error) {
+    console.error('API Error - getSelectedCalendar:', error);
+    throw error;
+  }
+};
+
 export default api;

@@ -31,6 +31,7 @@ import {
 } from '../services/api';
 import ColorPicker from '../components/ColorPicker';
 import AddLinkModal from '../components/AddLinkModal';
+import GoogleCalendarSettings from '../components/GoogleCalendarSettings';
 import axios from 'axios';
 import ServicesManager from './ServicesManager';
 
@@ -561,6 +562,9 @@ const Settings = () => {
         </div>
         <ServicesManager />
       </div>
+
+      {/* Google Calendar Integration */}
+      <GoogleCalendarSettings />
 
       {/* Knowledge Base */}
       <div className="card">

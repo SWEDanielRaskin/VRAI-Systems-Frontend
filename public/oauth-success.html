@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Calendar Connected</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f9fafb;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+        }
+        .success-icon {
+            width: 4rem;
+            height: 4rem;
+            margin: 0 auto 1rem;
+            background-color: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .checkmark {
+            width: 2rem;
+            height: 2rem;
+            color: white;
+            stroke-width: 3;
+            stroke: currentColor;
+            fill: none;
+        }
+        h1 {
+            color: #111827;
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        p {
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+        .btn {
+            background-color: #ec4899;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.2s;
+        }
+        .btn:hover {
+            background-color: #db2777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">
+            <svg class="checkmark" viewBox="0 0 24 24">
+                <polyline points="20,6 9,17 4,12"></polyline>
+            </svg>
+        </div>
+        <h1>Successfully Connected!</h1>
+        <p>Your Google Calendar has been connected to VRAI Systems. You can now close this window and return to the settings page.</p>
+        <button class="btn" onclick="window.close()">Close Window</button>
+    </div>
+
+    <script>
+        // Auto-close the window after 3 seconds
+        setTimeout(() => {
+            window.close();
+        }, 3000);
+    </script>
+</body>
+</html>
