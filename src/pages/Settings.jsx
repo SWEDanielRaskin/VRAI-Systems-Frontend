@@ -32,6 +32,7 @@ import {
 import ColorPicker from '../components/ColorPicker';
 import AddLinkModal from '../components/AddLinkModal';
 import GoogleCalendarSettings from '../components/GoogleCalendarSettings';
+import StripeSettings from '../components/StripeSettings';
 import axios from 'axios';
 import ServicesManager from './ServicesManager';
 
@@ -565,6 +566,9 @@ const Settings = () => {
 
       {/* Google Calendar Integration */}
       <GoogleCalendarSettings />
+
+      {/* Stripe Payments Integration */}
+      <StripeSettings />
 
       {/* Knowledge Base */}
       <div className="card">
