@@ -706,41 +706,6 @@ export const disconnectGoogleOAuth = async () => {
   }
 };
 
-// ==================== Stripe Connect OAuth API ====================
-
-// Initiate Stripe Connect OAuth flow
-export const initiateStripeOAuth = async () => {
-  try {
-    const response = await api.get('/api/oauth/stripe/auth');
-    return response.data;
-  } catch (error) {
-    console.error('API Error - initiateStripeOAuth:', error);
-    throw error;
-  }
-};
-
-// Check Stripe Connect OAuth connection status
-export const getStripeOAuthStatus = async () => {
-  try {
-    const response = await api.get('/api/oauth/stripe/status');
-    return response.data;
-  } catch (error) {
-    console.error('API Error - getStripeOAuthStatus:', error);
-    throw error;
-  }
-};
-
-// Disconnect Stripe Connect OAuth
-export const disconnectStripeOAuth = async () => {
-  try {
-    const response = await api.post('/api/oauth/stripe/disconnect');
-    return response.data;
-  } catch (error) {
-    console.error('API Error - disconnectStripeOAuth:', error);
-    throw error;
-  }
-};
-
 // ==================== Calendar Management API ====================
 
 // List user's Google Calendars
