@@ -2,9 +2,9 @@
 // This file contains all business branding information that can be easily changed for rebranding
 
 // Business Information
-export const BUSINESS_NAME = "Carla Thomas Med Spa";
-export const BUSINESS_FULL_NAME = "Carla Thomas Med Spa";
-export const BUSINESS_WEBSITE = "https://www.carlathomasmedspa.com/";
+export const BUSINESS_NAME = "VRAI Systems Med Spa";
+export const BUSINESS_FULL_NAME = "VRAI Systems Med Spa";
+export const BUSINESS_WEBSITE = "https://www.vraisystems.org";
 export const BUSINESS_DESCRIPTION = "Med Spa";
 
 // Project Configuration
