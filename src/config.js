@@ -2,10 +2,10 @@
 // This file contains all business branding information that can be easily changed for rebranding
 
 // Business Information
-export const BUSINESS_NAME = "VRAI Systems Med Spa";
-export const BUSINESS_FULL_NAME = "VRAI Systems Med Spa";
-export const BUSINESS_WEBSITE = "https://www.vraisystems.org";
-export const BUSINESS_DESCRIPTION = "Med Spa";
+export const BUSINESS_NAME = "AMH Chiropractic";
+export const BUSINESS_FULL_NAME = "Applied Modern Health at Canton";
+export const BUSINESS_WEBSITE = "https://amhchiropractic.com/";
+export const BUSINESS_DESCRIPTION = "Chiropractic";
 
 // Project Configuration
 export const PROJECT_NAME = "medspa-dashboard";
