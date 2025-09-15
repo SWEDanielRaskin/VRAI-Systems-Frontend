@@ -277,24 +277,6 @@ const Dashboard = () => {
       <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
         {/* Logo */}
         <div className="flex items-center space-x-2 md:space-x-3">
-          {/* Vrai Systems Logo */}
-          <img 
-            src="/vrai-logo-black.png" 
-            alt="Vrai Systems" 
-            className="h-10 w-auto md:h-16"
-            onError={(e) => {
-              // Hide the image on error - fallback will show automatically
-              e.target.style.display = 'none';
-              e.target.nextSibling.style.display = 'flex';
-            }}
-          />
-          {/* Fallback: VRAI SYSTEMS text logo */}
-          <div className="flex flex-col items-center" style={{ display: 'none' }}>
-            <span className="text-3xl md:text-5xl font-bold text-black leading-none">VRAI</span>
-            <span className="text-xs font-light text-black leading-none tracking-widest">S     Y    S     T     E     M     S</span>
-          </div>
-          {/* Collaboration "x" */}
-          <span className="text-gray-400 text-sm md:text-lg font-light">×</span>
           {/* Med Spa Logo/Text */}
           <div className="flex items-center space-x-1 md:space-x-2">
             {/* Med Spa Logo */}
