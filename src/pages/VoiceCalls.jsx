@@ -263,7 +263,7 @@ const VoiceCalls = () => {
               <span className="hidden sm:inline">Reload</span>
             </button>
             <a
-              href="https://docs.google.com/spreadsheets/d/1yhI8qk__zwjSukjEa2jSo2vb8rYxpzAbiRWOUMUif00/edit?usp=sharing"
+              href={import.meta.env.VITE_VOICE_CALLS_ARCHIVE_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-secondary flex items-center space-x-1 text-sm px-3 py-2"

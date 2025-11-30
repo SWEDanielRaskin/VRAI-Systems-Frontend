@@ -340,7 +340,7 @@ const Messages = () => {
             <span className="hidden sm:inline">Reload</span>
           </button>
           <a
-            href="https://docs.google.com/spreadsheets/d/1FdYk3XCJHCXIXmW94uYG4V2E_wXGmKmwie39Mf-J_JY/edit?usp=sharing"
+            href={import.meta.env.VITE_MESSAGES_ARCHIVE_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-secondary flex items-center space-x-1 text-sm px-3 py-2"
