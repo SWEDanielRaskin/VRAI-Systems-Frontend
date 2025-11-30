@@ -37,7 +37,6 @@ api.interceptors.response.use(
 );
 
 // Authentication API
-//Yuh
 export const login = async (username, password) => {
   try {
     const response = await api.post('/api/auth/login', {

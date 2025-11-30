@@ -10,9 +10,6 @@ export const BUSINESS_DESCRIPTION = "Med Spa";
 // Project Configuration
 export const PROJECT_NAME = "medspa-dashboard";
 
-// Login Configuration
-export const LOGIN_PASSWORD = "radiance2024";
-
 // Page Titles
 export const PAGE_TITLES = {
   dashboard: `${BUSINESS_NAME} - Dashboard`,
